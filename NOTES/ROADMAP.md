@@ -41,7 +41,8 @@ It was awfull to run PowerBI on my MacBook Air M1 with 8GB ram with VmFusion. It
 
 ### 3) Export the data Into PowerBI. 
 
-I wanna make a simple DashBoard with PowerBI. Doing more or less at the same time that the step before
+I wanna make a simple DashBoard with PowerBI. Doing more or less at the same time that the step before<br>
+Then include the PowerBI dashboard to the main page !!
 
 ### 4) Focusing on data engineering 
 Obviously import from CSV.

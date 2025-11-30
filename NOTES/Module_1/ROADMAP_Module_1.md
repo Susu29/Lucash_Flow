@@ -2,9 +2,11 @@
 ### 2) Watch a tutorial on docker
 ### 3) Make a Postgredatabse on docker
 ### 4) Check an accounting software to get inspiration
+- Odoo (+++ ERP EXPERIENCES)
+- Akaunting
 ### 5) Design the main elements of the software 
 
-##### Accounting related 
+#### Accounting related 
   - Client.      
   - Supplier
   - Accounting entry
@@ -14,6 +16,8 @@
 ##### Website functionality
   - Login
   - Export CSV
+
 ### 6) Design the SQL table accordingly
 ### 7) Watch a tutorial on Django, compare to how it works vs Flask
 ### 8) Start building
+### 9) Host it online ???
