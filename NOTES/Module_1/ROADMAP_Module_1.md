@@ -2,7 +2,7 @@
 ### 2) Watch a tutorial on docker - Finished 11/11/25 (Busy last 2 weeks, plus spent 8 hours + to understand docker more deeply)
 ### 3) Make a Postgredatabase on docker + Git Ignore - Finished 11/11/25 
 ADDED : LEARNED/MANAGED  PYENV & VENV to avoid Django troubles - Finished 11/11/25 
-ADDED : Django whole tutorial to avoid wasting time later :((( 
+ADDED : Django whole tutorial to avoid wasting time later :((( - Finished 13/11/25
 BONUS UNPLANNED STEP : 
 ### 4) Check an accounting software to get inspiration
 - Odoo (+++ ERP EXPERIENCES) --> Not 100% open source anymore 
