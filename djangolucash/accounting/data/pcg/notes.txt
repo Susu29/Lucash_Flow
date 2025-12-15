@@ -1,0 +1,3 @@
+PCG (Accounting plan) is downloaded in CSV from :
+https://github.com/Seb35/plans-comptables-francais
+Then uploaded to SQL using Pandas
