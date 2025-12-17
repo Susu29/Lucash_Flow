@@ -1,1 +1,25 @@
 {% extends "accounting/master.html" %}
+
+
+{% block content %}
+
+<div class="container mt-4">
+<h1 class="text-center">Accounts Table</h1>
+<table class="table table-bordered table">
+  <tr>
+    <th>Account class</th>
+    <th>Account code</th>
+    <th>Account name</th>
+  </tr>
+  {% for account in Accounts %}
+  <tr>
+    <td>{{ account.code_class}}</td>
+    <td>{{ account.code }}</td>
+    <td style="max-width: 300px;">{{ account.name }}</td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+
+
+{% endblock %}

@@ -1,8 +1,13 @@
+{% load static %}
+
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'accounting/bootstrap/css/bootstrap.min.css' %}">
+    <script src="{% static 'accounting/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
     <title>{% block title %}Default Name{% endblock %}</title>
   </head>
   <body>

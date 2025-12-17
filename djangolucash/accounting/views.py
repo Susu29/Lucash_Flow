@@ -1,14 +1,11 @@
-from django.db.models import F
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
-from django.views import generic
-from django.utils import timezone
-from django.views.generic import TemplateView
+from .models import Accounts
+from django.views.generic import TemplateView, ListView, DetailView
 
 # Create your views here.
 class IndexView(TemplateView):
     template_name = "accounting/index.html"
 
-class AccountsView(TemplateView):
+class AccountsView(ListView):
     template_name = "accounting/accounts.html"
+    model = Accounts
+    context_object_name = "Accounts"
