@@ -1,25 +1,50 @@
-{% extends "accounting/master.html" %}
-
-
-{% block content %}
+{% extends "accounting/master.html" %} {% block content %}
 
 <div class="container mt-4">
-<h1 class="text-center">Accounts Table</h1>
-<table class="table table-bordered table">
-  <tr>
-    <th>Account class</th>
-    <th>Account code</th>
-    <th>Account name</th>
-  </tr>
-  {% for account in Accounts %}
-  <tr>
-    <td>{{ account.code_class}}</td>
-    <td>{{ account.code }}</td>
-    <td style="max-width: 300px;">{{ account.name }}</td>
-  </tr>
-  {% endfor %}
-</table>
+  <h1 class="text-center">Accounts Table</h1>
+  <table class="table table-bordered table" id="accountTable">
+    <thead>
+      <tr>
+        <th>Account class</th>
+        <th>Account code</th>
+        <th>Account name</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for account in Accounts %}
+    
+      <tr>
+        <td>{{ account.code_class}}</td>
+        <td>{{ account.code }}</td>
+        <td>{{ account.name }}</td>
+      </tr>
+    
+    {% endfor %}
+    </tbody>
+  </table>
 </div>
+
+<div style="display: flex; justify-content: center; gap: 15px">
+  <form action = "{% url 'accounting:add_accounts' %}">
+    <input class="btn btn-primary" type="submit" value="New account"/> 
+  </form>
+  <form action = "{% url 'accounting:select_accounts' %}">
+    <input class="btn btn-primary" type="submit" value="Delete account"/> 
+  </form>
+</div>
+
+  <script>
+  $(document).ready( function () {
+      $('#accountTable').DataTable(
+        {select: true,
+        columnDefs:[{type : 'string', targets:1}],
+        order : [[1, 'asc']],
+        }
+      )
+  } );
+  </script>
+
 
 
 {% endblock %}
+

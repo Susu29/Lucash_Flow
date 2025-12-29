@@ -1,20 +1,42 @@
 {% load static %}
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
+    <title>LucashFlow</title>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static 'accounting/bootstrap/css/bootstrap.min.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script src="{% static 'accounting/jquery/js/jquery-3.7.1.min.js' %}"></script>
+
+    <link
+      rel="stylesheet"
+      href="{% static 'accounting/bootstrap/css/bootstrap.min.css' %}"
+    />
     <script src="{% static 'accounting/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <link
+      rel="stylesheet"
+      href="{% static 'accounting/datatables/css/dataTables.min.css' %}"
+    />
+    <script src="{% static 'accounting/datatables/js/dataTables.min.js' %}"></script>
 
     <title>{% block title %}Default Name{% endblock %}</title>
   </head>
+
   <body>
+    <div class = "text-center">
+    <header>
+      <a href = "/accounting/" class="text-decoration-none text-reset"><h3>Lucash Flow</h3></a>
+    </header>
+    {% for message in messages %}
+      <div style ="color : green">{{ message }}</div>
+    {% endfor %}
+
+    </div>
     {% block content %}
     <h1></h1>
-    <h1>To do:</h1>
-    <h2>Accounts URL - HERE</h2>
+    <h1>To do - Master Template Actually Used</h1>
     {% endblock %}
   </body>
 </html>

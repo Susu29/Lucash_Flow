@@ -1,9 +1,7 @@
-x = 123456
-print(str(x)[:2])
+<h1>HOLAAAA</h1>
+<form action = {% url 'accounting:add_accounts' %} method = "POST">
+    {% csrf_token %}
+    <label for="my_test">That's my test</label>
+    <input id="my_test" type="text" name="test_value">
 
-y = 223456
-
-if str(x)[:2] == str(y)[:2]:
-    print("True")
-else:
-    print("False")
+</form>

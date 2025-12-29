@@ -1,3 +1,7 @@
 {% extends "accounting/master.html" %}
-{% block title %}LucashhhhFlow{% endblock %}
-
+{% block content %}
+<ul class="list-group">
+    <li><a href="/admin/">Admin</a></li>
+    <li><a href="{% url 'accounting:accounts' %}">Accounts</a></li>
+</ul>
+{% endblock %}
