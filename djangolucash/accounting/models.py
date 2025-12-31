@@ -40,6 +40,7 @@ class Suppliers(models.Model):
     def __str__(self):
         return f"{self.code} - {self.name}" 
     
+    
 class Customers(models.Model):
     code = models.CharField(unique=True, max_length=3)
     name = models.CharField(max_length=200)

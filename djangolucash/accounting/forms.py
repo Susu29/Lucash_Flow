@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 from django.db import models
-from accounting.models import Accounts
+from accounting.models import Accounts, Suppliers, Customers
 
 class AccountsForm(ModelForm):
     class Meta:
@@ -20,6 +20,29 @@ class SelectAccountsForm(forms.Form):
         empty_label="Select Account"
     )
 
+class SuppliersForm(ModelForm):
+    class Meta:
+        model = Suppliers
+        fields = "__all__"
+
+class CustomersForm(ModelForm):
+    class Meta:
+        model = Customers
+        fields = "__all__"
+
+class SelectSuppliersForm(forms.Form):
+    suppliers = forms.ModelChoiceField(
+        queryset=Suppliers.objects.all().order_by('code'),
+        label="Choose a supplier",
+        empty_label="Select a supplier"
+    )
+
+class SelectCustomersForm(forms.Form):
+    suppliers = forms.ModelChoiceField(
+        queryset=Customers.objects.all().order_by('code'),
+        label="Choose a customer",
+        empty_label="Select a customer"
+    )
 
 
 

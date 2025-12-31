@@ -1,0 +1,68 @@
+{% extends "accounting/master.html" %} {% block content %}
+
+<div class="container mt-4">
+  <h1 class="text-center">{{party_type}} table</h1>
+
+  <table class="table table-bordered table" id="accountTable">
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Phone</th>
+        <th>Created</th>
+        <th>Uptaded</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for party in thirdparty %}
+    
+      <tr>
+        <td>{{party.code}}</td>
+        <td>{{party.name}}</td>
+        <td>{{party.email}}</td>
+        <td>{{party.address}}</td>
+        <td>{{party.phone}}</td>
+        <td>{{party.created_at}}</td>
+        <td>{{party.uptaded_at}}</td>
+      </tr>
+    
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% if party_type == "Suppliers" %}
+<div style="display: flex; justify-content: center; gap: 15px">
+  <form action = "{% url 'accounting:add_suppliers' %}">
+    <input class="btn btn-primary" type="submit" value="New Supplier"/> 
+  </form>
+  <form action = "{% url 'accounting:select_suppliers' %}">
+    <input class="btn btn-primary" type="submit" value="Delete Supplier"/> 
+  </form>
+</div>
+{% endif %}
+
+{% if party_type == "Customers" %}
+<div style="display: flex; justify-content: center; gap: 15px">
+  <form action = "{% url 'accounting:add_customers' %}">
+    <input class="btn btn-primary" type="submit" value="New Customer"/> 
+  </form>
+  <form action = "{% url 'accounting:select_customers' %}">
+    <input class="btn btn-primary" type="submit" value="Delete Customer"/> 
+  </form>
+</div>
+{% endif %}
+
+  <script>
+  $(document).ready( function () {
+      $('#accountTable').DataTable(
+      )
+  } );
+  </script>
+
+
+
+{% endblock %}
+

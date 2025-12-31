@@ -1,0 +1,17 @@
+{% extends "accounting/master.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container mt-5 shadow p-4 rounded" style="max-width: 600px;">
+    <h1>Create new contact : {{party_type}}</h1>
+    
+
+    <form action = "" method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input id="submit" type="submit">
+    </form>
+</div>
+
+{% endblock %}
