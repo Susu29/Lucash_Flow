@@ -34,10 +34,16 @@ class SelectAccountsView(FormView):
         return redirect("accounting:delete_accounts", pk=selected.id)
 
 class DeleteAccountsView(SuccessMessageMixin, DeleteView):
-    model = Accounts
     template_name = "accounting/delete_accounts.html"
-    success_url = reverse_lazy('accounting:accounts')
+    #success_url = reverse_lazy('accounting:accounts')
     success_message = ('Account deleted successfully.')
+
+    def get_success_url(self):
+        print(self.model)
+        if self.model.__name__ == "Customers":
+            return reverse('accounting:customers')
+        elif self.model.__name__ == "Suppliers":
+            return reverse('accounting:suppliers')
 
 class ThirdPartyView(ListView):
     template_name = "accounting/thirdparty.html"
@@ -75,11 +81,19 @@ class AddThirdPartyView(SuccessMessageMixin, CreateView):
 
 class SelectThirdPartyView(FormView):
     template_name = "accounting/select_accounts.html"
-    form_class = None
     party_type = None
-    delete_url_name = "accounting:delete_accounts"
+    delete_url_name = None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["party_type"] = self.party_type
+        return context
 
     def form_valid(self, form):
-        selected = form.cleaned_data["suppliers"]
-        #selected = form.cleaned_data[self.party_type]
-        return redirect("accounting:delete_accounts", pk=selected.id)
+        selected = form.cleaned_data[self.party_type]
+        if self.party_type == "Suppliers":
+            return redirect("accounting:delete_suppliers", pk=selected.id)
+        elif self.party_type == "Customers":
+            return redirect("accounting:delete_customers", pk=selected.id)
+
+
