@@ -19,7 +19,6 @@ class Accounts(models.Model):
                 self.type = 'C'
             else:
                 self.type = 'G'
-            ### INT IS THE PROBLEM HERE. I NEED TO EXTRACT THE FIRST VALUE OF AN INT
             self.code_class = int(two_digits[0])
 
     def save(self, *args, **kwargs):
@@ -84,6 +83,10 @@ class AccountsLink(models.Model):
     account = models.ForeignKey(Accounts,on_delete=models.CASCADE, null=True, blank=True)
     customer = models.ForeignKey(Customers, on_delete=models.CASCADE, null=True, blank=True)
     supplier = models.ForeignKey(Suppliers, on_delete=models.CASCADE, null=True, blank=True)
+    sorting_account = models.CharField(max_length = 6, unique=True, editable=False)
+
+    class Meta:
+        sorting = ["sort_code", "id"]
 
     def clean(self):
         count = sum(bool(x) for x in (self.account, self.customer, self.supplier))
@@ -99,7 +102,8 @@ class AccountsLink(models.Model):
     
     def save(self, *args, **kwargs):
         self.full_clean()
-        super().save(*args, **kwargs)    
+        super().save(*args, **kwargs)
+
     
 class TransactionHeader(models.Model):
     invoice = models.CharField(max_length=200, blank=True, null=True)

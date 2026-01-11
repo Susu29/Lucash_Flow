@@ -1,0 +1,44 @@
+{% extends "accounting/master.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container mt-5 shadow p-4 rounded" style="max-width: 1000px;">
+    <h1>Create new transaction</h1>
+
+    <form action = "" method="post">
+        {% csrf_token %}
+
+        <div class="transaction_header">
+            <h3>Transaction header</h3>
+            {{ form|crispy }}
+        </div>
+
+        <div class="transaction_line">
+            <h3>Transaction Lines</h3>
+            {{ formset.management_form }}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Debit/Credit</th>
+                        <th>Account</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for line in formset %}
+                    <tr>
+                        <td>{{line.debit_credit}}</td>
+                        <td>{{line.account}}</td>
+                        <td>{{line.amount}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <input id="submit" type="submit">
+        </div>
+    </form>
+        
+
+{% endblock %}

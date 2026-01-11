@@ -1,10 +1,10 @@
 from django.forms import ModelForm
 from django import forms
 from django.db import models
-from accounting.models import Accounts, Suppliers, Customers
-
+from accounting.models import Accounts, Suppliers, Customers, TransactionHeader, TransactionLine
 from django.db.models.functions import Cast
 from django.db.models import CharField
+from django.forms import inlineformset_factory
 
 class AccountsForm(ModelForm):
     class Meta:
@@ -43,7 +43,10 @@ class SelectCustomersForm(forms.Form):
         empty_label="Select a customer"
     )
 
+class TransactionsHeaderForm(ModelForm):
+    class Meta:
+        model = TransactionHeader
+        fields = "__all__"
 
-
-
+TransactionsLinesFormSet = inlineformset_factory(TransactionHeader ,TransactionLine, fields=["debit_credit", "account", "amount"])
 

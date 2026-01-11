@@ -1,6 +1,6 @@
-from .models import Accounts, Suppliers, Customers
+from .models import Accounts, Suppliers, Customers, TransactionHeader
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, DeleteView, FormView
-from .forms import AccountsForm, SelectAccountsForm, SelectSuppliersForm
+from .forms import AccountsForm, SelectAccountsForm, SelectSuppliersForm, TransactionsHeaderForm, TransactionsLinesFormSet
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django import forms
 from django.shortcuts import redirect
+from django.db import transaction
 # Create your views here.
 class IndexView(TemplateView):
     template_name = "accounting/index.html"
@@ -89,4 +90,22 @@ class SelectThirdPartyView(FormView):
         elif self.party_type == "Customers":
             return redirect("accounting:delete_customers", pk=selected.id)
 
+def add_transactions(request):
+    if request.method == "POST":
+        form = TransactionsHeaderForm(request.POST)
+        formset = TransactionsLinesFormSet(request.POST)
+        if form.is_valid() and formset.is_valid():
+            with transaction.atomic():
+                header = form.save()
+                formset.instance = header
+                formset.save()
+            messages.success(request, "Transaction created successfully.")
+            return redirect("accounting:accounts")
+    else:
+        form = TransactionsHeaderForm()
+        formset = TransactionsLinesFormSet()
 
+    return render(request, "accounting/add_transactions.html", {'form': form, 'formset' : formset})
+
+
+# The problem is that i need a view that uses multiple forms.
