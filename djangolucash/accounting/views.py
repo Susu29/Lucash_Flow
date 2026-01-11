@@ -72,13 +72,6 @@ class AddThirdPartyView(SuccessMessageMixin, CreateView):
         return context
     #Model Passed by URL
 
-
-
-########## STOPPED HERE --- BTW IT LOOKS INTO PK OF ACCOUNTS BIG TROUBLE -- Probably use delete accounts form. 
-## YES THATS WHY IM REDIRECTING TO WRONG URL 
-## Either i adjsut the delete_accounts forms either i just create two others one
-
-
 class SelectThirdPartyView(FormView):
     template_name = "accounting/select_accounts.html"
     party_type = None
