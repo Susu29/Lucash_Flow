@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, MinLengthValidator, MaxLengthValidator
 from django.core.exceptions import ValidationError
-
+from decimal import Decimal
 # Create your models here.
 class Accounts(models.Model):
 
@@ -80,13 +80,13 @@ class AccountsLink(models.Model):
     # The existing accounts have been sync with a SQL request directly into the DB
     # For the new accounts, a SQL trigger function has been incorported to the migration #7.
     # Seems like it was the only solution that apply both to django modification and to direct SQL injection.
-    account = models.ForeignKey(Accounts,on_delete=models.CASCADE, null=True, blank=True)
-    customer = models.ForeignKey(Customers, on_delete=models.CASCADE, null=True, blank=True)
-    supplier = models.ForeignKey(Suppliers, on_delete=models.CASCADE, null=True, blank=True)
-    sorting_account = models.CharField(max_length = 6, unique=True, editable=False)
+    account = models.OneToOneField(Accounts,on_delete=models.CASCADE, null=True, blank=True)
+    customer = models.OneToOneField(Customers, on_delete=models.CASCADE, null=True, blank=True)
+    supplier = models.OneToOneField(Suppliers, on_delete=models.CASCADE, null=True, blank=True)
+    sorting_account = models.CharField(max_length = 6, editable=False, null=False, blank=False, unique=True)
 
     class Meta:
-        sorting = ["sort_code", "id"]
+        ordering = ["sorting_account", "id"]
 
     def clean(self):
         count = sum(bool(x) for x in (self.account, self.customer, self.supplier))
@@ -94,11 +94,12 @@ class AccountsLink(models.Model):
             raise ValidationError("Select exactly ONE account, customer, or supplier")
 
     def __str__(self):
+
         if self.customer:
-           return self.customer.account_code 
+            return str(f'{self.customer.account_code} - {self.customer.name}')
         if self.supplier:
-            return self.supplier.account_code
-        return str(self.account.code)
+            return str(f'{self.supplier.account_code} - {self.supplier.name}')
+        return str(f'{self.account.code} - {self.account.name[:100]}') # Can do the same for name
     
     def save(self, *args, **kwargs):
         self.full_clean()
@@ -108,9 +109,16 @@ class AccountsLink(models.Model):
 class TransactionHeader(models.Model):
     invoice = models.CharField(max_length=200, blank=True, null=True)
     name = models.CharField(max_length=200)
-    date = models.DateTimeField()
+    date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def formatted_date(self):
+            return self.date.strftime("%d/%m/%Y")
+    
+
+    def __str__(self):
+        return f"{self.id}" 
 
 class TransactionLine(models.Model):
 
@@ -120,13 +128,11 @@ class TransactionLine(models.Model):
     ]
 
     header = models.ForeignKey(TransactionHeader, on_delete=models.CASCADE)
-    debit_credit = models.CharField(max_length=1, choices=type_choices)
-    account = models.ForeignKey(AccountsLink, on_delete=models.PROTECT)
-    amount = models.DecimalField(max_digits=12, decimal_places=2)
-
+    debit_credit = models.CharField(max_length=1, choices=type_choices, blank=False, null=False)
+    account = models.ForeignKey(AccountsLink, on_delete=models.PROTECT, blank=False, null=False)
+    amount = models.DecimalField(max_digits=12, decimal_places=2, validators=[MinValueValidator(Decimal(0.01))], blank=False, null=False)
 
     
-
 
 
 

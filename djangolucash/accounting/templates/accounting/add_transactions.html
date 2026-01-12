@@ -30,7 +30,7 @@
                     {% for line in formset %}
                     <tr>
                         <td>{{line.debit_credit}}</td>
-                        <td>{{line.account}}</td>
+                        <td style = "overflow: hidden; max-width: 650px;">{{line.account}}</td>
                         <td>{{line.amount}}</td>
                     </tr>
                     {% endfor %}

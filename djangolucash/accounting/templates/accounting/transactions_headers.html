@@ -1,0 +1,54 @@
+{% extends "accounting/master.html" %} {% block content %}
+
+<div class="container mt-4">
+  <h1 class="text-center">Transaction Headers</h1>
+  <table class="table table-bordered table" id="transactionsheaderTable">
+    <thead>
+      <tr>
+        <th>Invoice</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Created at</th>
+        <th>Updated at</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for field in transactionsheader %}
+    
+      <tr>
+        <td>{{ field.invoice}}</td>
+        <td>{{ field.name }}</td>
+        <td>{{ field.date }}</td>
+        <td>{{ field.created_at }}</td>
+        <td>{{ field.updated_at }}</td>
+      </tr>
+
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div style="display: flex; justify-content: center; gap: 15px">
+  <form action = "{% url 'accounting:add_transactions' %}">
+    <input class="btn btn-primary" type="submit" value="New transaction"/> 
+  </form>
+  <form action = "{% url 'accounting:select_accounts' %}">
+    <input class="btn btn-primary" type="submit" value="Delete account"/> 
+  </form>
+</div>
+
+  <script>
+  $(document).ready( function () {
+      $('#transactionsheaderTable').DataTable(
+        {select: true,
+        columnDefs:[{type : 'string', targets:1}],
+        order : [[2, 'asc']],
+        }
+      )
+  } );
+  </script>
+
+
+
+{% endblock %}
+

@@ -1,0 +1,50 @@
+{% extends "accounting/master.html" %} {% block content %}
+
+<div class="container mt-4">
+  <h1 class="text-center">Balance Sheet</h1>
+  <table class="table table-bordered table" id="balanceTable">
+    <thead>
+      <tr>
+        <th>Account</th>
+        <th>Name</th>
+        <th>Debit</th>
+        <th>Credit</th>
+        <th>Balance</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for line in balance %}
+    {% if line.total_debit or line.total_credit %}
+      <tr>
+        <td>{{ line.sorting_account }}</td>
+        <td>{% if line.account %} {{line.account.name}} 
+            {% elif line.customer %} {{line.customer.name}}
+            {% elif line.supplier %} {{line.supplier.name}} 
+            {% endif %}
+        </td>
+        <td>{{line.total_debit | default:" "}}</td>
+        <td>{{line.total_credit | default:" "}}</td>
+        <td>{{line.total_balance| default:" "}}</td>
+        
+      </tr>
+    {% endif %}
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+  <script>
+  $(document).ready( function () {
+      $('#balanceTable').DataTable(
+        {select: true,
+        columnDefs:[{type : 'string', targets:0}],
+        order : [[0, 'asc']],
+        }
+      )
+  } );
+  </script>
+
+
+
+{% endblock %}
+

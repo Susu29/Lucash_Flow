@@ -1,0 +1,72 @@
+{% extends "accounting/master.html" %} {% block content %}
+
+<div class="container mt-4">
+  <h1 class="text-center">Ledger</h1>
+  <table class="table table-bordered table" id="transactionslineTable">
+    <thead>
+      <tr>
+        <th>Transaction</th>
+        <th>Date</th>
+        <th>Account</th>
+        <th>Debit</th>
+        <th>Credit</th>
+
+      </tr>
+    </thead>
+    <tbody>
+    {% for field in transactionsline %}
+    
+      <tr>
+        <td>{{ field.header }}</td>
+        <td>{{ field.header.formatted_date }}</td>
+        <td>{{ field.account }}</td>
+        <td>{% if field.debit_credit == "D" %} {{field.amount}} {% endif %}</td>
+        <td>{% if field.debit_credit == "C" %} {{field.amount}} {% endif %}</td>
+
+      </tr>
+
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div style="display: flex; justify-content: center; gap: 15px">
+  <form action = "{% url 'accounting:add_transactions' %}">
+    <input class="btn btn-primary" type="submit" value="New transaction"/> 
+  </form>
+  <form action = "{% url 'accounting:select_transactions' %}">
+    <input class="btn btn-primary" type="submit" value="Delete transaction"/> 
+  </form>
+</div>
+
+
+
+  <script>
+  $(document).ready( function () {
+      $('#transactionslineTable').DataTable(
+        {select: true,
+        order : [[0, 'asc']],
+        columnDefs: [
+            {
+                targets: 0,        // Transactions column
+                width: "1%",       // shrink to content
+                className: "dt-center"
+            },
+            {
+                targets: 1,              // debit/credit column
+                width: "60px",
+                className: "dt-center"
+            },
+           {
+                targets: 2,
+                type: 'string'
+           }]
+        }
+      )
+  } );
+  </script>
+
+
+
+{% endblock %}
+

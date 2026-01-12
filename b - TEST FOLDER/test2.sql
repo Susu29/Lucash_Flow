@@ -19,7 +19,7 @@ BEGIN
     END IF;
 
     IF TG_OP IN ('INSERT', 'UPDATE') THEN
-        sql_query := format('INSERT INTO accounting_accountslink (%I, sort_code) VALUES ($1, $2) ON CONFLICT DO NOTHING', field_to_modify);
+        sql_query := format('INSERT INTO accounting_accountslink (%I, sorting_account) VALUES ($1, $2) ON CONFLICT DO NOTHING', field_to_modify);
         EXECUTE sql_query USING NEW.id, sort_value;
     ELSIF TG_OP = 'DELETE' THEN
         sql_query := format('DELETE FROM accounting_accountslink WHERE (%I) = ($1)', field_to_modify);

@@ -29,9 +29,12 @@
     <header>
       <a href = "/accounting/" class="text-decoration-none text-reset"><h3>Lucash Flow</h3></a>
     </header>
+
     {% for message in messages %}
       <div style ="color : green">{{ message }}</div>
     {% endfor %}
+
+    <div style ="color : red; text-align: center">{{ formset.non_form_errors }}</div>
 
     </div>
     {% block content %}

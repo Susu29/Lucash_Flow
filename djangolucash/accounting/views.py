@@ -1,6 +1,6 @@
-from .models import Accounts, Suppliers, Customers, TransactionHeader
+from .models import Accounts, Suppliers, Customers, TransactionHeader, TransactionLine, AccountsLink
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, DeleteView, FormView
-from .forms import AccountsForm, SelectAccountsForm, SelectSuppliersForm, TransactionsHeaderForm, TransactionsLinesFormSet
+from .forms import AccountsForm, SelectAccountsForm, SelectSuppliersForm, TransactionsHeaderForm, TransactionsLinesFormSet, SelectTransactionsForm
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
@@ -9,6 +9,10 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django import forms
 from django.shortcuts import redirect
 from django.db import transaction
+from django.db.models import Sum, Q, F
+from django.db.models.functions import Coalesce
+from decimal import Decimal
+
 # Create your views here.
 class IndexView(TemplateView):
     template_name = "accounting/index.html"
@@ -100,12 +104,53 @@ def add_transactions(request):
                 formset.instance = header
                 formset.save()
             messages.success(request, "Transaction created successfully.")
-            return redirect("accounting:accounts")
+            return redirect("accounting:transactions_lines")
     else:
         form = TransactionsHeaderForm()
         formset = TransactionsLinesFormSet()
 
     return render(request, "accounting/add_transactions.html", {'form': form, 'formset' : formset})
 
+class TransactionsHeaderView(ListView):
+    template_name = "accounting/transactions_headers.html"
+    model = TransactionHeader
+    context_object_name = "transactionsheader"
 
-# The problem is that i need a view that uses multiple forms.
+
+
+class TransactionsLineView(ListView):
+    template_name = "accounting/transactions_lines.html"
+    model = TransactionLine
+    context_object_name = "transactionsline"
+
+
+class SelectTransactionsView(FormView): ### To be deleted soon
+    template_name = "accounting/select_transactions.html"
+    form_class = SelectTransactionsForm
+
+    def form_valid(self, form):
+        selected = form.cleaned_data["transactions"]
+        return redirect("accounting:delete_transactions", pk=selected.id)
+    
+class DeleteTransactionsView(SuccessMessageMixin, DeleteView):
+    template_name = "accounting/delete_transactions.html"
+    success_url = reverse_lazy('accounting:transactions_line')
+    success_message = ('Transaction deleted successfully.')
+
+class BalanceView(ListView):
+    template_name = "accounting/balance.html"
+    model = AccountsLink
+    context_object_name = "balance"
+    """
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+
+
+        context["total_debit"] = (AccountsLink.objects.annotate(total_debit = Sum('transactionline__amount')))
+        return context
+    """
+    def get_queryset(self):
+        return (AccountsLink.objects.annotate(total_debit = Coalesce(Sum('transactionline__amount', filter=Q(transactionline__debit_credit="D")), Decimal(0)), 
+                                             total_credit = Coalesce(Sum('transactionline__amount', filter=Q(transactionline__debit_credit="C")), Decimal(0)))
+                                             .annotate(total_balance = F("total_debit") - F("total_credit")))
