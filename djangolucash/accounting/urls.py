@@ -18,10 +18,12 @@ urlpatterns = [
     path("accounts/<int:pk>/delete_customers/", views.DeleteAccountsView.as_view(model=Customers), name="delete_customers"),
     path("transactions/add", views.add_transactions, name="add_transactions"),
     path("transactions/headers", views.TransactionsHeaderView.as_view(), name="transactions_headers"),
-    path("transactions/lines", views.TransactionsLineView.as_view(), name="transactions_lines"),
+    path("transactions/ledger", views.LedgerView.as_view(), name="ledger"),
     path("transactions/select_transactions/", views.SelectTransactionsView.as_view(), name="select_transactions"),
     path("accounts/<int:pk>/delete_transactions/", views.DeleteTransactionsView.as_view(model=TransactionHeader), name="delete_transactions"),
     path("balance/", views.BalanceView.as_view(), name="balance"),
+    path("income_statement/", views.IncomeStatementView.as_view(), name="income_statement"),
+
 
 
 

@@ -51,6 +51,9 @@ class TransactionsHeaderForm(ModelForm):
     class Meta:
         model = TransactionHeader
         fields = "__all__"
+        help_texts = {
+            "date" : "Format - DD/MM/YYYY"
+        }
 
 class TransactionBaseInLineFormSet(BaseInlineFormSet):
     def clean(self):

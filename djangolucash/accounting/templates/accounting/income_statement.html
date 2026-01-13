@@ -1,0 +1,70 @@
+{% extends "accounting/master.html" %} {% block content %}
+
+<div class="container mt-4">
+  <h1 class="text-center">Income Statement</h1>
+</div>
+<div class="container mt-5">
+  <table class="table table-bordered fs-5">
+  <thead>
+  </thead>
+  <tbody>
+      <tr>
+        <td>Operating Expenses</td>
+        <td class="numbers">{{totals.op_expenses|floatformat:2}}</td>
+        <td>Operating Revenues </td>
+        <td class="numbers">{{totals.op_revenues|floatformat:2}}</td>
+      </tr>
+      <tr>
+        <td>Financial Expenses</td>
+        <td class="numbers">{{totals.fi_expenses|floatformat:2}}</td>
+        <td>Financial Revenues </td>
+        <td class="numbers">{{totals.fi_revenues|floatformat:2}}</td>
+      </tr>
+      <tr>
+        <td>Exceptional Expenses</td>
+        <td class="numbers">{{totals.ex_expenses|floatformat:2}}</td>
+        <td>Exceptional Revenues </td>
+        <td class="numbers">{{totals.ex_revenues|floatformat:2}}</td>
+      </tr>
+      <tr>
+        <td class="major_txt">Total Expenses</td>
+        <td class="numbers">{{grand_total_expenses|floatformat:2}}</td>
+        <td class="major_txt">Total Revenues </td>
+        <td class="numbers">{{grand_total_revenues|floatformat:2}}</td>
+      </tr>
+      <tr>
+        <td>Profit</td>
+        <td class="numbers">{% if result > 0 %}{{result|floatformat:2}}{% endif %}</td>
+        <td>Loss</td>
+        <td class="numbers">{% if result < 0 %}{{result|floatformat:2}}{% endif %}</td>
+      <tr>
+        <td class="major_txt">Grand Total</td>
+        <td class="numbers">{{grand_total|floatformat:2}}</td>
+        <td class="major_txt">Grand Total</td>
+        <td class="numbers">{{grand_total|floatformat:2}}</td>
+      </tr>
+  </tbody>
+  </table>
+</div>
+
+<div class ="mt-5" style="display: flex; justify-content: center; gap: 15px">
+  <form action = "{% url 'accounting:index' %}">
+    <input class="btn btn-primary" type="submit" value="Back to menu"/> 
+  </form>
+</div>
+
+
+  <script>
+  $(document).ready( function () {
+      $('#accountTable').DataTable(
+        {select: true,
+        order : [[0, 'asc']],
+        }
+      )
+  } );
+  </script>
+
+
+
+{% endblock %}
+

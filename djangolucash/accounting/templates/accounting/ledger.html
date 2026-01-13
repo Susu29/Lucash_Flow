@@ -2,24 +2,32 @@
 
 <div class="container mt-4">
   <h1 class="text-center">Ledger</h1>
-  <table class="table table-bordered table" id="transactionslineTable">
+  <table class="table table-bordered table" id="ledgerTable">
     <thead>
       <tr>
         <th>Transaction</th>
         <th>Date</th>
         <th>Account</th>
+        <th>Account title</th>
+        <th>Transaction name</th>
         <th>Debit</th>
         <th>Credit</th>
 
       </tr>
     </thead>
     <tbody>
-    {% for field in transactionsline %}
+    {% for field in ledger %}
     
       <tr>
         <td>{{ field.header }}</td>
         <td>{{ field.header.formatted_date }}</td>
-        <td>{{ field.account }}</td>
+        <td>{{ field.account.sorting_account}}</td>
+        <td>{% if field.account.account %} {{field.account.account.name}} 
+            {% elif field.account.customer %} {{field.account.customer.name}}
+            {% elif field.account.supplier %} {{field.account.supplier.name}} 
+            {% endif %}
+        </td>
+        <td>{{ field.header.name }}</td>
         <td>{% if field.debit_credit == "D" %} {{field.amount}} {% endif %}</td>
         <td>{% if field.debit_credit == "C" %} {{field.amount}} {% endif %}</td>
 
@@ -43,24 +51,30 @@
 
   <script>
   $(document).ready( function () {
-      $('#transactionslineTable').DataTable(
+      $('#ledgerTable').DataTable(
         {select: true,
         order : [[0, 'asc']],
         columnDefs: [
             {
-                targets: 0,        // Transactions column
-                width: "1%",       // shrink to content
+                targets: 0,        
+                width: "1%",       
                 className: "dt-center"
             },
             {
-                targets: 1,              // debit/credit column
+                targets: 1,              
                 width: "60px",
                 className: "dt-center"
             },
            {
                 targets: 2,
-                type: 'string'
-           }]
+                width: "1%",       
+                className: "dt-center"
+           },
+          {
+                targets: 3,       
+                width: "300px",  
+                className: "one-line"
+            },]
         }
       )
   } );
