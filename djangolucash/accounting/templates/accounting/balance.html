@@ -3,8 +3,8 @@
 
 
 <div class="container mt-4">
-  <h1 class="text-center">Balance Sheet</h1>
-  <table class="table table-bordered table" id="balanceTable">
+  <h1 class="display-6">Balance</h1>
+  <table class="table table-bordered table" style="width:100% ;table-layout:fixed;" id="balanceTable">
     <thead>
       <tr>
         <th>Account</th>
@@ -14,15 +14,8 @@
         <th>Balance</th>
       </tr>
     </thead>
-    <tfoot>
-      <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-    </tfoot>
+
+    <tbody>
     {% for line in balance %}
     {% if line.total_debit or line.total_credit %}
       <tr>
@@ -35,18 +28,29 @@
         <td>{{line.total_debit | default:" "|floatformat:2|intcomma}}</td>
         <td>{{line.total_credit | default:" "|floatformat:2|intcomma}}</td>
         <td>{{line.total_balance| default:" "|floatformat:2|intcomma}}</td>
-        
       </tr>
     {% endif %}
     {% endfor %}
     </tbody>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </tfoot>
   </table>
 </div>
 <div style="display: flex; justify-content: center;">
   <form style="margin: 0;" action = "{% url 'accounting:index' %}">
     <input class="btn btn-primary" type="submit" value="Back to menu"/> 
   </form>
+
 </div>
+
+
 <script>
 
 $(document).ready(function() {

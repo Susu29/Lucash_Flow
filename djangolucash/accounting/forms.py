@@ -52,6 +52,7 @@ class TransactionsHeaderForm(ModelForm):
             "date" : "Format - DD/MM/YYYY"
         }
 
+### Review the logic of formet factory below
 class TransactionBaseInLineFormSet(BaseInlineFormSet):
     def clean(self):
         super().clean()
@@ -76,12 +77,11 @@ class TransactionBaseInLineFormSet(BaseInlineFormSet):
         if debit != credit:
             form.add_error(None, "Debit must be equal to Credit")
             raise ValidationError("Debit must be equal to Credit")
-            
 
 
-
+### Formset_Factory = Prepare to have multiple forms.
 TransactionsLinesFormSet = inlineformset_factory(
-    TransactionHeader ,
+    TransactionHeader,
     TransactionLine, 
     fields=["debit_credit", "account", "amount"],
     min_num=2,

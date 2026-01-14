@@ -28,6 +28,7 @@
                 </thead>
                 <tbody>
                     {% for line in formset %}
+{# line.id is hidden. Super important otherwise it's not automatically transfered to the form. Remember that only what's in the form is rendered #}
                     {{line.id}}
                     <tr>
                         <td style = "overflow: hidden;">{{line.debit_credit}}</td>

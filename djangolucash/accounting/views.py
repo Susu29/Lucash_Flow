@@ -205,15 +205,7 @@ class BalanceView(ListView):
     template_name = "accounting/balance.html"
     model = AccountsLink
     context_object_name = "balance"
-    """
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
 
-
-
-        context["total_debit"] = (AccountsLink.objects.annotate(total_debit = Sum('transactionline__amount')))
-        return context
-    """
     def get_queryset(self):
         return (AccountsLink.objects.annotate(total_debit = Coalesce(Sum('transactionline__amount', filter=Q(transactionline__debit_credit="D")), Decimal(0)), 
                                              total_credit = Coalesce(Sum('transactionline__amount', filter=Q(transactionline__debit_credit="C")), Decimal(0)))
