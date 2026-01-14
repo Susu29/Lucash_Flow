@@ -1,8 +1,6 @@
 {% extends "accounting/master.html" %} {% block content %}
 {% load humanize %}
 
-
-
 <div class="container mt-4">
   <h1 class="text-center">Balance Sheet</h1>
 </div>
@@ -37,12 +35,12 @@
       <tr>
         <td>Including : Financial assets</td>
         <td class="numbers">{{bal.financial_assets|floatformat:2|intcomma}}</td>
-        <td>Net income </td>
-        <td class="numbers">{{net_income|floatformat:2|intcomma}}</td>
+        <td>{%if net_income > 0 %}Net income{% endif %}</td>
+        <td class="numbers">{%if net_income > 0 %}{{net_income|floatformat:2|intcomma}}{% endif %}</td>
       </tr>
       <tr>
-        <td></td>
-        <td class="numbers"></td>
+        <td>{%if net_income < 0 %}Net loss{% endif %}</td>
+        <td class="numbers">{%if net_income < 0 %}{{net_income|floatformat:2|intcomma}}{% endif %}</td>
         <td>Retained earning</td>
         <td class="numbers">{{bal.retained_earnings|floatformat:2|intcomma}}</td>
       </tr>
@@ -87,8 +85,8 @@
   </table>
 </div>
 
-<div class ="mt-5" style="display: flex; justify-content: center; gap: 15px">
-  <form action = "{% url 'accounting:index' %}">
+<div style="display: flex; justify-content: center;">
+  <form style="margin: 0;" action = "{% url 'accounting:index' %}">
     <input class="btn btn-primary" type="submit" value="Back to menu"/> 
   </form>
 </div>

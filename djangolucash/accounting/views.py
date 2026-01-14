@@ -1,12 +1,10 @@
 from .models import Accounts, Suppliers, Customers, TransactionHeader, TransactionLine, AccountsLink
-from django.views.generic import TemplateView, ListView, DetailView, CreateView, DeleteView, FormView
-from .forms import AccountsForm, SelectAccountsForm, SelectSuppliersForm, TransactionsHeaderForm, TransactionsLinesFormSet, SelectTransactionsForm
+from django.views.generic import TemplateView, ListView, CreateView, DeleteView, FormView, UpdateView
+from .forms import AccountsForm, SelectAccountsForm, TransactionsHeaderForm, TransactionsLinesFormSet, SelectTransactionsForm
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django import forms
 from django.shortcuts import redirect
 from django.db import transaction
 from django.db.models import Sum, Q, F
@@ -16,8 +14,7 @@ from decimal import Decimal
 # Create your views here.
 class IndexView(TemplateView):
     template_name = "accounting/index.html"
-
-
+### Accounts View Related
 class AccountsView(ListView):
     template_name = "accounting/accounts.html"
     model = Accounts
@@ -33,18 +30,45 @@ class AddAccountsView(SuccessMessageMixin, CreateView):
 class SelectAccountsView(FormView):
     template_name = "accounting/select_accounts.html"
     form_class = SelectAccountsForm
+    
+    ### Trying a method different than thirdparty detection to not have to map multiple URL, as it would make 4 more different URLS
+    # Dispatch one extract the operation_type for the URL
+    def dispatch(self, request, *args, **kwargs):
+        self.operation_type = kwargs["operation_type"]
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["operation_type"] = self.operation_type
+        return context
 
     def form_valid(self, form):
         selected = form.cleaned_data["accounts"]
-        return redirect("accounting:delete_accounts", pk=selected.id)
+        if self.operation_type == "delete":
+            return redirect("accounting:delete_accounts", pk=selected.id)
+        elif self.operation_type == "update":
+            return redirect("accounting:update_accounts", pk=selected.id)
 
 class DeleteAccountsView(SuccessMessageMixin, DeleteView):
     template_name = "accounting/delete_accounts.html"
-    #success_url = reverse_lazy('accounting:accounts')
     success_message = ('Account deleted successfully.')
 
     def get_success_url(self):
-        print(self.model)
+        if self.model.__name__ == "Customers":
+            return reverse('accounting:customers')
+        elif self.model.__name__ == "Suppliers":
+            return reverse('accounting:suppliers')
+        else:
+            return reverse('accounting:accounts')
+
+class UpdateAccountsView(SuccessMessageMixin, UpdateView):
+    #Model passed via URL
+    #form_class also passed via URL
+    template_name = "accounting/update_accounts.html"
+    #success_url = reverse_lazy('accounting:accounts')
+    success_message = ('Account modified successfully.')
+
+    def get_success_url(self):
         if self.model.__name__ == "Customers":
             return reverse('accounting:customers')
         elif self.model.__name__ == "Suppliers":
@@ -52,8 +76,10 @@ class DeleteAccountsView(SuccessMessageMixin, DeleteView):
         else:
             return reverse('accounting:accounts')
         
+### ThirdParty View Related
 
 class ThirdPartyView(ListView):
+    #Model passed via URL
     template_name = "accounting/thirdparty.html"
     context_object_name = "thirdparty"
     party_type = None
@@ -85,17 +111,25 @@ class SelectThirdPartyView(FormView):
     party_type = None
     delete_url_name = None
 
+    def dispatch(self, request, *args, **kwargs):
+        self.operation_type = kwargs["operation_type"]
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["operation_type"] = self.operation_type
         context["party_type"] = self.party_type
         return context
 
+    #Easier to make it with variables rather than 4 return redirect (2*2)
     def form_valid(self, form):
         selected = form.cleaned_data[self.party_type]
-        if self.party_type == "Suppliers":
-            return redirect("accounting:delete_suppliers", pk=selected.id)
-        elif self.party_type == "Customers":
-            return redirect("accounting:delete_customers", pk=selected.id)
+        party_url_field = self.party_type.lower()
+        operation_url_field = self.operation_type
+
+        return redirect(f"accounting:{operation_url_field}_{party_url_field}", pk=selected.id)
+    
+### Transactions View Related
 
 def add_transactions(request):
     if request.method == "POST":
@@ -119,26 +153,53 @@ class TransactionsHeaderView(ListView):
     model = TransactionHeader
     context_object_name = "transactionsheader"
 
-
-
-class LedgerView(ListView):
-    template_name = "accounting/ledger.html"
-    model = TransactionLine
-    context_object_name = "ledger"
-
-
-class SelectTransactionsView(FormView): ### To be deleted soon
+class SelectTransactionsView(FormView): 
     template_name = "accounting/select_transactions.html"
     form_class = SelectTransactionsForm
 
+    def dispatch(self, request, *args, **kwargs):
+        self.operation_type = kwargs["operation_type"]
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["operation_type"] = self.operation_type
+        return context
+
     def form_valid(self, form):
         selected = form.cleaned_data["transactions"]
-        return redirect("accounting:delete_transactions", pk=selected.id)
+        return redirect(f"accounting:{self.operation_type}_transactions", pk=selected.id)
     
 class DeleteTransactionsView(SuccessMessageMixin, DeleteView):
     template_name = "accounting/delete_transactions.html"
     success_url = reverse_lazy('accounting:ledger')
     success_message = ('Transaction deleted successfully.')
+
+def update_transactions(request,pk):
+
+    header = TransactionHeader.objects.get(id=pk)
+
+    # Identical to add. Should be the same verifications
+    if request.method == "POST":
+        form = TransactionsHeaderForm(request.POST, instance=header)
+        formset = TransactionsLinesFormSet(request.POST, instance=header)
+        if form.is_valid() and formset.is_valid():
+            with transaction.atomic():
+                header = form.save()
+                formset.save()
+            messages.success(request, "Transaction updated successfully.")
+            return redirect("accounting:ledger")
+    else:
+        form = TransactionsHeaderForm(instance=header)
+        formset = TransactionsLinesFormSet(instance=header)
+    return render(request, "accounting/update_transactions.html", {'form': form, 'formset' : formset})
+
+#Financial Statements View Related
+
+class LedgerView(ListView):
+    template_name = "accounting/ledger.html"
+    model = TransactionLine
+    context_object_name = "ledger"
 
 class BalanceView(ListView):
     template_name = "accounting/balance.html"
@@ -203,7 +264,7 @@ class BalanceSheetView(TemplateView):
         class_6=Coalesce(Sum('total_balance', filter=Q(sorting_account__startswith="6")), Decimal("0.00")),
         class_7=Coalesce(-Sum('total_balance', filter=Q(sorting_account__startswith="7")), Decimal("0.00")),
 
-
+        ## Using basic regex from now because i don't want to copy past 1000 times
         #ASSETS
         #FIXED ASSETS
         intangible_assets=Coalesce(Sum('total_balance', filter=Q(sorting_account__regex=r'^(20|28)')), Decimal("0.00")),

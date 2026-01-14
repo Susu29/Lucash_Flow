@@ -30,7 +30,7 @@
     {% for field in ledger %}
     
       <tr>
-        <td>{{ field.header }}</td>
+        <td>{{ field.header.id }}</td>
         <td>{{ field.header.formatted_date }}</td>
         <td>{{ field.account.sorting_account}}</td>
         <td>{% if field.account.account %} {{field.account.account.name}} 
@@ -53,10 +53,15 @@
   <form action = "{% url 'accounting:add_transactions' %}">
     <input class="btn btn-primary" type="submit" value="New transaction"/> 
   </form>
-  <form action = "{% url 'accounting:select_transactions' %}">
+  <form action = "{% url 'accounting:select_transactions' 'update'%}">
+    <input class="btn btn-primary" type="submit" value="Update transaction"/> 
+  </form>
+  <form action = "{% url 'accounting:select_transactions' 'delete'%}">
     <input class="btn btn-primary" type="submit" value="Delete transaction"/> 
   </form>
+
 </div>
+
 
   <style>
   #ledgerTable tfoot input {
@@ -86,8 +91,6 @@
         {select: true,
         order : [[0, 'asc']],
         autoWidth: false,
-        
-        
         columnDefs: [
             {
                 targets: 0,        

@@ -35,7 +35,10 @@
   <form action = "{% url 'accounting:add_accounts' %}">
     <input class="btn btn-primary" type="submit" value="New account"/> 
   </form>
-  <form action = "{% url 'accounting:select_accounts' %}">
+  <form action = "{% url 'accounting:select_accounts' 'update' %}">
+    <input class="btn btn-primary" type="submit" value="Update account"/> 
+  </form>
+  <form action = "{% url 'accounting:select_accounts' 'delete' %}">
     <input class="btn btn-primary" type="submit" value="Delete account"/> 
   </form>
 </div>

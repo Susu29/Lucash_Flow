@@ -3,8 +3,8 @@
 
 {% block content %}
 
-<div class="container mt-5 shadow p-4 rounded" style="max-width: 1000px;">
-    <h1>Create new transaction</h1>
+<div class="container mt-5 shadow p-4 rounded" style="max-width: 1000px;"">
+    <h1>Update transaction</h1>
 
     <form action = "" method="post">
         {% csrf_token %}
@@ -17,20 +17,23 @@
         <div>
             <h3>Transaction Lines</h3>
             {{ formset.management_form }}
-            <table class="table" style="max-width:950px; table-layout: fixed;">
+            <table class="table" style="max-width:900px; table-layout: fixed;">
                 <thead>
-                    <tr>
-                        <th style="width:12%">Debit/Credit</th>
-                        <th style="width:63%">Account</th>
-                        <th style="width:25%">Amount</th>
-                    </tr>
+            <tr>
+                <th style="width:12%">Debit/Credit</th>
+                <th style="width:58%">Account</th>
+                <th style="width:25%">Amount</th>
+                <th style="width:5%">Delete</th>
+            </tr>
                 </thead>
                 <tbody>
                     {% for line in formset %}
+                    {{line.id}}
                     <tr>
                         <td style = "overflow: hidden;">{{line.debit_credit}}</td>
                         <td style = "overflow: hidden;">{{line.account}}</td>
                         <td style = "overflow: hidden;">{{line.amount}}</td>
+                        <td style = "overflow: hidden;">{{line.DELETE}} </td>
                     </tr>
                     {% endfor %}
                 </tbody>

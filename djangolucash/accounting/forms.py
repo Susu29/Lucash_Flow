@@ -20,7 +20,6 @@ class SelectAccountsForm(forms.Form):
     accounts = forms.ModelChoiceField(
     queryset= Accounts.objects.order_by(Cast("code", CharField()).asc()),
     label="Choose an account",
-    empty_label="Select Account"
     )
 
 class SuppliersForm(ModelForm):
@@ -37,14 +36,12 @@ class SelectSuppliersForm(forms.Form):
     Suppliers = forms.ModelChoiceField(
         queryset=Suppliers.objects.all().order_by('code'),
         label="Choose a supplier",
-        empty_label="Select a supplier"
     )
 
 class SelectCustomersForm(forms.Form):
     Customers = forms.ModelChoiceField(
         queryset=Customers.objects.all().order_by('code'),
         label="Choose a customer",
-        empty_label="Select a customer"
     )
 
 class TransactionsHeaderForm(ModelForm):
@@ -83,11 +80,17 @@ class TransactionBaseInLineFormSet(BaseInlineFormSet):
 
 
 
-TransactionsLinesFormSet = inlineformset_factory(TransactionHeader ,TransactionLine, fields=["debit_credit", "account", "amount"], min_num=2, extra=5, formset=TransactionBaseInLineFormSet)
+TransactionsLinesFormSet = inlineformset_factory(
+    TransactionHeader ,
+    TransactionLine, 
+    fields=["debit_credit", "account", "amount"],
+    min_num=2,
+    extra=5,
+    can_delete=True,
+    formset=TransactionBaseInLineFormSet)
 
 class SelectTransactionsForm(forms.Form):
     transactions = forms.ModelChoiceField(
     queryset= TransactionHeader.objects.all(),
-    label="Select the transaction ID to delete it.",
-    empty_label="Select transaction ID"
+    label="Select a transaction",
     )

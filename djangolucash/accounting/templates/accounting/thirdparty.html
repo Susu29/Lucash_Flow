@@ -49,7 +49,10 @@
   <form action = "{% url 'accounting:add_suppliers' %}">
     <input class="btn btn-primary" type="submit" value="New Supplier"/> 
   </form>
-  <form action = "{% url 'accounting:select_suppliers' %}">
+  <form action = "{% url 'accounting:select_suppliers' 'update' %}">
+    <input class="btn btn-primary" type="submit" value="Update account"/> 
+  </form>
+  <form action = "{% url 'accounting:select_suppliers' 'delete' %}">
     <input class="btn btn-primary" type="submit" value="Delete Supplier"/> 
   </form>
 </div>
@@ -60,7 +63,10 @@
   <form action = "{% url 'accounting:add_customers' %}">
     <input class="btn btn-primary" type="submit" value="New Customer"/> 
   </form>
-  <form action = "{% url 'accounting:select_customers' %}">
+  <form action = "{% url 'accounting:select_customers' 'update' %}">
+    <input class="btn btn-primary" type="submit" value="Update account"/> 
+  </form>
+  <form action = "{% url 'accounting:select_customers' 'delete' %}">
     <input class="btn btn-primary" type="submit" value="Delete Customer"/> 
   </form>
 </div>
