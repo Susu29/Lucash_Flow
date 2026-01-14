@@ -10,6 +10,13 @@
         <th>Account name</th>
       </tr>
     </thead>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </tfoot>
     <tbody>
     {% for account in Accounts %}
     
@@ -33,16 +40,35 @@
   </form>
 </div>
 
-  <script>
-  $(document).ready( function () {
-      $('#accountTable').DataTable(
-        {select: true,
-        columnDefs:[{type : 'string', targets:1}],
-        order : [[1, 'asc']],
-        }
-      )
-  } );
-  </script>
+
+<script>
+$(document).ready(function () {
+
+  // Add inputs to each footer cell (bottom of table)
+    $('#accountTable tfoot th').each( function () {
+        var title = $('#accountTable thead th').eq( $(this).index() ).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    } );
+
+  // Initialize DataTable ONCE
+  var table = $('#accountTable').DataTable({
+    select: true,
+    columnDefs: [{ type: 'string', targets: 1 }],
+    order: [[1, 'asc']]
+  });
+
+    table.columns().every( function () {
+        var that = this;
+ 
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            that
+                .search( this.value )
+                .draw();
+        } );
+    } );
+} );
+</script>
+
 
 
 

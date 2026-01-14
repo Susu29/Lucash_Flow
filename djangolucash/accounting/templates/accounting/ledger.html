@@ -1,4 +1,5 @@
 {% extends "accounting/master.html" %} {% block content %}
+{% load humanize %}
 
 <div class="container mt-4">
   <h1 class="text-center">Ledger</h1>
@@ -12,9 +13,19 @@
         <th>Transaction name</th>
         <th>Debit</th>
         <th>Credit</th>
-
       </tr>
     </thead>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </tfoot>
     <tbody>
     {% for field in ledger %}
     
@@ -28,8 +39,8 @@
             {% endif %}
         </td>
         <td>{{ field.header.name }}</td>
-        <td>{% if field.debit_credit == "D" %} {{field.amount}} {% endif %}</td>
-        <td>{% if field.debit_credit == "C" %} {{field.amount}} {% endif %}</td>
+        <td>{% if field.debit_credit == "D" %} {{field.amount|floatformat:2|intcomma}} {% endif %}</td>
+        <td>{% if field.debit_credit == "C" %} {{field.amount|floatformat:2|intcomma}} {% endif %}</td>
 
       </tr>
 
@@ -47,13 +58,36 @@
   </form>
 </div>
 
+  <style>
+  #ledgerTable tfoot input {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 2px 6px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
 
+  #ledgerTable tfoot th {
+    padding: 4px;
+  }
+  </style>
 
   <script>
-  $(document).ready( function () {
-      $('#ledgerTable').DataTable(
+
+  $(document).ready(function() {
+    // Setup - add a text input to each footer cell
+    $('#ledgerTable tfoot th').each( function () {
+        var title = $('#ledgerTable thead th').eq( $(this).index() ).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    } );
+
+      var table  = $('#ledgerTable').DataTable(
         {select: true,
         order : [[0, 'asc']],
+        autoWidth: false,
+        
+        
         columnDefs: [
             {
                 targets: 0,        
@@ -77,7 +111,17 @@
             },]
         }
       )
-  } );
+
+    table.columns().every( function () {
+        var that = this;
+ 
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            that
+                .search( this.value )
+                .draw();
+        } );
+    } );
+} );
   </script>
 
 

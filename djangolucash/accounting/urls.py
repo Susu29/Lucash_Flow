@@ -23,6 +23,7 @@ urlpatterns = [
     path("accounts/<int:pk>/delete_transactions/", views.DeleteTransactionsView.as_view(model=TransactionHeader), name="delete_transactions"),
     path("balance/", views.BalanceView.as_view(), name="balance"),
     path("income_statement/", views.IncomeStatementView.as_view(), name="income_statement"),
+    path("balance_sheet/", views.BalanceSheetView.as_view(), name="balance_sheet"),
 
 
 

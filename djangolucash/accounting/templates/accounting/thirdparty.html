@@ -3,7 +3,7 @@
 <div class="container mt-4">
   <h1 class="text-center">{{party_type}} table</h1>
 
-  <table class="table table-bordered table" id="accountTable">
+  <table class="table table-bordered table" id="thirdpartyTable">
     <thead>
       <tr>
         <th>Code</th>
@@ -15,6 +15,17 @@
         <th>Uptaded</th>
       </tr>
     </thead>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </tfoot>
     <tbody>
     {% for party in thirdparty %}
     
@@ -55,10 +66,45 @@
 </div>
 {% endif %}
 
+  <style>
+  #thirdpartyTable tfoot input {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 2px 6px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  #ledgerTable tfoot th {
+    padding: 4px;
+  }
+  </style>
+
+
   <script>
-  $(document).ready( function () {
-      $('#accountTable').DataTable(
-      )
+
+  $(document).ready(function () {
+
+    // Add inputs to each footer cell (bottom of table)
+      $('#thirdpartyTable tfoot th').each( function () {
+          var title = $('#thirdpartyTable thead th').eq( $(this).index() ).text();
+          $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+      } );
+
+    // Initialize DataTable ONCE
+    var table = $('#thirdpartyTable').DataTable(
+        );
+
+      table.columns().every( function () {
+          var that = this;
+  
+          $( 'input', this.footer() ).on( 'keyup change', function () {
+              that
+                  .search( this.value )
+                  .draw();
+          } );
+      } );
   } );
   </script>
 

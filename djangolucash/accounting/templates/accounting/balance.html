@@ -1,4 +1,6 @@
 {% extends "accounting/master.html" %} {% block content %}
+{% load humanize %}
+
 
 <div class="container mt-4">
   <h1 class="text-center">Balance Sheet</h1>
@@ -12,7 +14,15 @@
         <th>Balance</th>
       </tr>
     </thead>
-    <tbody>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </tfoot>
     {% for line in balance %}
     {% if line.total_debit or line.total_credit %}
       <tr>
@@ -22,9 +32,9 @@
             {% elif line.supplier %} {{line.supplier.name}} 
             {% endif %}
         </td>
-        <td>{{line.total_debit | default:" "}}</td>
-        <td>{{line.total_credit | default:" "}}</td>
-        <td>{{line.total_balance| default:" "}}</td>
+        <td>{{line.total_debit | default:" "|floatformat:2|intcomma}}</td>
+        <td>{{line.total_credit | default:" "|floatformat:2|intcomma}}</td>
+        <td>{{line.total_balance| default:" "|floatformat:2|intcomma}}</td>
         
       </tr>
     {% endif %}
@@ -33,19 +43,34 @@
   </table>
 </div>
 
+<script>
 
-  <script>
-  $(document).ready( function () {
-      $('#balanceTable').DataTable(
+$(document).ready(function() {
+    // Setup - add a text input to each footer cell
+    $('#balanceTable tfoot th').each( function () {
+        var title = $('#balanceTable thead th').eq( $(this).index() ).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    } );
+ 
+        // DataTable
+    var table = $('#balanceTable').DataTable(
         {select: true,
         columnDefs:[{type : 'string', targets:0}],
         order : [[0, 'asc']],
         }
-      )
-  } );
-  </script>
+      );
 
-
+    table.columns().every( function () {
+        var that = this;
+ 
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            that
+                .search( this.value )
+                .draw();
+        } );
+    } );
+} );
+</script>
 
 {% endblock %}
 

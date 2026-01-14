@@ -1,0 +1,97 @@
+{% extends "accounting/master.html" %} {% block content %}
+{% load humanize %}
+
+
+
+<div class="container mt-4">
+  <h1 class="text-center">Balance Sheet</h1>
+</div>
+<div class="container mt-5">
+  <table class="table table-bordered fs-5">
+  <thead>
+    <tr>
+      <th colspan="2">Assets</th>
+      <th colspan="2">Liabilities</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td class="major_txt">Fixed Assets</td>
+        <td class="numbers">{{fixed_assets|floatformat:2|intcomma}}</td>
+        <td class="major_txt">Equity</td>
+        <td class="numbers">{{equity|floatformat:2|intcomma}}</td>
+      </tr>
+      <tr>
+        <td>Including : Intangible Assets</td>
+        <td class="numbers">{{bal.intangible_assets|floatformat:2|intcomma}}</td>
+        <td>Share capital</td>
+        <td class="numbers">{{bal.share_capital|floatformat:2|intcomma}}</td>
+
+      </tr>
+      <tr>
+        <td>Including : Tangible fixed assets</td>
+        <td class="numbers">{{bal.tangible_assets|floatformat:2|intcomma}}</td>
+        <td>Reserves</td>
+        <td class="numbers">{{bal.reserves|floatformat:2|intcomma}}</td>
+      </tr>
+      <tr>
+        <td>Including : Financial assets</td>
+        <td class="numbers">{{bal.financial_assets|floatformat:2|intcomma}}</td>
+        <td>Net income </td>
+        <td class="numbers">{{net_income|floatformat:2|intcomma}}</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td class="numbers"></td>
+        <td>Retained earning</td>
+        <td class="numbers">{{bal.retained_earnings|floatformat:2|intcomma}}</td>
+      </tr>
+        <tr>
+        <td></td>
+        <td></td>
+        <td>Other equity</td>
+        <td class="numbers">{{other_equity|floatformat:2|intcomma}}</td>
+      </tr>
+      <tr>
+        <td class="major_txt">Current assets</td>
+        <td class="numbers">{{current_assets|floatformat:2|intcomma}}</td>
+        <td class="major_txt">Debt</td>
+        <td class="numbers">{{debt|floatformat:2|intcomma}}</td>
+      </tr>
+      <tr>
+        <td>Inventories</td>
+        <td class="numbers">{{bal.inventories|floatformat:2|intcomma}}</td>
+        <td>Financial debt</td>
+        <td class="numbers">{{bal.financial_debt|floatformat:2|intcomma}}</td>
+
+      </tr>
+      <tr>
+        <td>Accounts receivables</td>
+        <td class="numbers">{{bal.accounts_receivable|floatformat:2|intcomma}}</td>
+        <td>Accounts payables</td>
+        <td class="numbers">{{bal.accounts_payable|floatformat:2|intcomma}}</td>
+      </tr>
+      <tr>
+        <td>Cash & Cash equivalent</td>
+        <td class="numbers">{{bal.cash_and_equiv|floatformat:2|intcomma}}</td>
+        <td>Other payables</td>
+        <td class="numbers">{{bal.other_payables|floatformat:2|intcomma}}</td>
+      </tr>
+      <tr>
+        <td class="major_txt">Total</td>
+        <td class="numbers">{{assets|floatformat:2|intcomma}}</td>
+        <td class="major_txt">Total</td>
+        <td class="numbers">{{liabilities|floatformat:2|intcomma}}</td>
+      </tr>
+  </tbody>
+  </table>
+</div>
+
+<div class ="mt-5" style="display: flex; justify-content: center; gap: 15px">
+  <form action = "{% url 'accounting:index' %}">
+    <input class="btn btn-primary" type="submit" value="Back to menu"/> 
+  </form>
+</div>
+
+{% endblock %}
+

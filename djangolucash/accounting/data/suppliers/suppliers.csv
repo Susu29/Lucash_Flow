@@ -1,0 +1,71 @@
+﻿code;name;email;address;phone
+ABC;Alpha Business Consulting;contact@alphabc.com;12 Rue Lafayette Paris;33145678901
+ACM;Acme Manufacturing;sales@acmemfg.com;45 Industrial Way Lyon;33478901234
+AGL;Agile Logistics;info@agilelog.com;8 Quai du Port Marseille;33491122334
+ALT;Altis Technologies;support@altistech.com;22 Avenue Europe Lille;33320987654
+AMS;Ames Solutions;hello@amessol.com;5 Business Park Nantes;33240123456
+ANT;Antares Services;contact@antares-services.com;18 Rue des Étoiles Toulouse;33561234567
+ARC;Arcania Group;info@arcania-group.com;9 Rue Victor Hugo Bordeaux;33556789012
+AST;Aster Supplies;sales@astersupplies.com;30 Zone Artisanale Reims;33326781234
+BAS;Basic Office Supplies;orders@basicoffice.com;14 Office Road Rouen;33235123456
+BLC;BlueLine Consulting;contact@blueline-consult.com;21 Rue Centrale Paris;33147891234
+BMT;Biomatech Labs;info@biomatech.com;4 Science Park Grenoble;33476894512
+BRC;BrightCore Systems;support@brightcore.io;10 Tech Avenue Lyon;33472123456
+BSP;Best Supplier Partners;contact@bestsupplier.com;33 Rue du Commerce Paris;33155443322
+CEN;Centrex Energy;info@centrexenergy.com;7 Energy Plaza Pau;33559876543
+CLD;Cloudia IT Services;support@cloudia.io;11 Digital Hub Paris;33149998877
+CMP;Compass Materials;sales@compassmat.com;19 Route Nationale Metz;33387654321
+CRN;Coronis Networks;contact@coronisnet.com;6 Innovation Way Sophia-Antipolis;33493987654
+DCT;Delta Construction;info@deltaconstruct.fr;55 Avenue BTP Nice;33493112233
+DIG;Digital Forge;hello@digitalforge.io;2 Startup Lane Paris;33161234567
+DSC;DataSource Consulting;contact@datasourcec.com;15 Analytics Blvd Lyon;33472887766
+ECO;EcoTrade Solutions;sales@ecotrade.com;27 Green Road Rennes;33299887766
+ELT;Elite Transport;dispatch@elitetransport.com;90 Logistics Park Orléans;33238445566
+ENG;Enginuity Works;info@enginuity.com;13 Mechanical Street Troyes;33325678901
+ENV;EnviroTech Group;contact@envirotech.fr;8 Rue Verte Annecy;33450778899
+EXA;Exabyte Systems;support@exabyte.io;42 Silicon Alley Paris;33146667788
+FEN;Fenix Industrial Supplies;orders@fenixind.com;25 Factory Zone Mulhouse;33389654321
+FLO;Florentis Services;contact@florentis.fr;6 Rue des Jardins Tours;33247234567
+FST;Fastline Couriers;dispatch@fastline.com;3 Delivery Hub Roissy;33123459876
+GEO;Geonex Engineering;info@geonex-eng.com;18 TechnoPark Brest;33298112233
+GLB;Global Bridge Trading;sales@globalbridge.com;77 Trade Center Paris;33156778899
+GMA;Gamma Solutions;hello@gammasol.com;9 Rue Newton Nancy;33383776655
+GRN;GreenAxis Corp;info@greenaxis.com;44 Eco Valley Valence;33475889900
+HBR;Harbor Logistics;contact@harborlog.com;1 Port Road Le Havre;33235221100
+HXT;Hexatech Industries;support@hexatech.com;12 Tech Lane Saclay;33160998877
+IMP;Impact Services;info@impact-services.fr;19 Rue Centrale Dijon;33380776655
+INF;Inflow Consulting;contact@inflowconsult.com;8 Business Way Paris;33145556677
+INT;Interlink Solutions;info@interlink-sol.com;5 Connector Ave Lyon;33472665544
+KOR;Korex Materials;sales@korexmat.com;21 Steel Road Dunkerque;33328889900
+LOG;Logistia France;dispatch@logistia.fr;60 Freight Park Rungis;33149556677
+LUM;Lumina Tech;hello@luminatech.io;14 Light Street Paris;33147778899
+MAX;Maxima Office;orders@maximaoffice.com;9 Paper Road Angers;33241223344
+MET;Metroline Services;contact@metroline.fr;120 Transit Blvd Paris;33142334455
+MOB;Mobility Partners;info@mobipartners.com;33 Transport Way Lyon;33472881212
+NEX;Nexera Digital;support@nexeradigital.com;4 Cyber Lane Paris;33145559988
+NOR;Northwind Traders;sales@northwind.com;88 Trade Way Calais;33321887766
+OPT;Optima Solutions;contact@optimasol.com;7 Performance Rd Strasbourg;33388112233
+ORB;Orbital Systems;info@orbitalsys.com;15 Aerospace Park Toulouse;33561229988
+PAC;Pacific Imports;orders@pacificimp.com;5 Dockside Rd Marseille;33491126677
+PRO;Proxima Consulting;hello@proxima-consult.com;10 Strategy Ave Paris;33148997766
+QRS;QRS Industrial;sales@qrs-ind.com;19 Production Way Saint-Étienne;33477998811
+RAP;Rapid Office Supply;orders@rapidoffice.com;2 Station Road Amiens;33322776655
+RED;Redline Services;dispatch@redline.fr;48 Express Blvd Lille;33320889911
+SOL;Solaria Energy;info@solariaenergy.com;21 Solar Park Montpellier;33467112233
+SPN;Spinex Manufacturing;sales@spinexmfg.com;31 Assembly Rd Cholet;33241665544
+STR;Stratus Consulting;contact@stratus-consult.com;6 Cloud Ave Paris;33147881122
+SUP;SupraTech Solutions;support@supratech.io;18 Innovation Rd Lyon;33472887755
+SYS;Systema Group;info@systema.fr;25 Logiciel Way Grenoble;33476883322
+TAL;Talys Partners;contact@talys.fr;9 Rue du Conseil Paris;33144667788
+TEC;Technium Services;hello@technium.io;3 Digital Park Rennes;33299884455
+TRN;Translog Europe;dispatch@translog.eu;70 Cargo Way Metz;33387661234
+UNI;Unitech Components;sales@unitechcomp.com;8 Circuit Rd Annecy;33450229988
+VAL;Valoria Consulting;contact@valoria.fr;11 Finance Plaza Paris;33145556699
+VEC;Vector Systems;support@vectorsys.io;4 Algorithm Ave Sophia-Antipolis;33493992211
+VIA;ViaNova Services;info@vianova.fr;29 Route Nouvelle Poitiers;33549334455
+WAV;Wavex Solutions;hello@wavex.io;12 Signal Street Paris;33147770011
+WES;Westcore Supplies;orders@westcore.com;66 Supply Rd Caen;33231112233
+XEN;Xenon Industries;sales@xenonind.com;17 Plasma Way Limoges;33555334422
+ZEN;Zenith Consulting;contact@zenith-consult.com;1 Summit Rd Paris;33142223344
+ZEP;Zephyr Logistics;dispatch@zephyrlog.com;22 Wind Park Narbonne;33468445566
+ZON;ZoneTrade Europe;sales@zonetrade.eu;9 Freeport Rd Marseille;33491125544

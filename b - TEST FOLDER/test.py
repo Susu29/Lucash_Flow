@@ -1,3 +1,5 @@
-a = 123
+headers = [5]
+lines = [7]
 
-print(a[0])
+complete_transaction = [headers,lines] 
+print(complete_transaction)

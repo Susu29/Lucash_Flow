@@ -6,6 +6,8 @@
     <form action = "",  method="post">
         {% csrf_token %}
         <h1>Are you sure you want to delete the following account ?</h1>
+        <p>An account can't be deleted if he is related to existing transactions. </br>
+        Please delete or modify all related transactions before deleting the account.</p>
         <p>{{object}}</p>
         <input id="submit" type="submit">
     </form>
