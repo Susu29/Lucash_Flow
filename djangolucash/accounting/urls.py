@@ -1,9 +1,10 @@
 from django.urls import path
 from . import views, forms
 from .models import Accounts, Suppliers, Customers, TransactionHeader
+from django.views.generic import RedirectView
 app_name = "accounting"
 urlpatterns = [
-    path("", views.IndexView.as_view(), name="index"),
+    path("", RedirectView.as_view(url="home")),
     path("home", views.HomeView.as_view(), name = "home"),
     path("faq", views.EmptyView.as_view(template_name="accounting/faq.html"), name = "faq"),
     path("accounts/", views.AccountsView.as_view(), name="accounts"),

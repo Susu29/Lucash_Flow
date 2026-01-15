@@ -45,6 +45,11 @@ class SelectCustomersForm(forms.Form):
     )
 
 class TransactionsHeaderForm(ModelForm):
+    date = forms.DateField(
+    input_formats=["%d/%m/%Y"],
+    widget=forms.DateInput(format="%d/%m/%Y")
+    )
+    
     class Meta:
         model = TransactionHeader
         fields = "__all__"

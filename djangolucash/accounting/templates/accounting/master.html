@@ -26,7 +26,7 @@
     <title>{% block title %}Default Name{% endblock %}</title>
   </head>
 
-  <body class ="pt-5">
+  <body class ="pt-4">
     <div class = "text-center">
     <header>
       
@@ -75,10 +75,10 @@
 
 
     {% for message in messages %}
-      <div style ="color : green">{{ message }}</div>
+      <div class="text-center mt-5 text-success">{{ message }}</div>
     {% endfor %}
 
-    <div style ="color : red; text-align: center">{{ formset.non_form_errors }}</div>
+    <div class="text-center mt-5 text-danger">{{ formset.non_form_errors }}</div>
 
     </div>
     {% block content %}
