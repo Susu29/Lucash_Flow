@@ -41,12 +41,12 @@
 </div>
 
 {% if party_type == "Suppliers" %}
-<div style="display: flex; justify-content: center; gap: 15px">
+<div class="d-flex justify-content-center gap-3 mb-3">
   <form action = "{% url 'accounting:add_suppliers' %}">
     <input class="btn btn-primary" type="submit" value="New Supplier"/> 
   </form>
   <form action = "{% url 'accounting:select_suppliers' 'update' %}">
-    <input class="btn btn-primary" type="submit" value="Update account"/> 
+    <input class="btn btn-primary" type="submit" value="Update Supplier"/> 
   </form>
   <form action = "{% url 'accounting:select_suppliers' 'delete' %}">
     <input class="btn btn-primary" type="submit" value="Delete Supplier"/> 
@@ -55,12 +55,12 @@
 {% endif %}
 
 {% if party_type == "Customers" %}
-<div style="display: flex; justify-content: center; gap: 15px">
+<div class="d-flex justify-content-center gap-3 mb-3">
   <form action = "{% url 'accounting:add_customers' %}">
     <input class="btn btn-primary" type="submit" value="New Customer"/> 
   </form>
   <form action = "{% url 'accounting:select_customers' 'update' %}">
-    <input class="btn btn-primary" type="submit" value="Update account"/> 
+    <input class="btn btn-primary" type="submit" value="Update Customer"/> 
   </form>
   <form action = "{% url 'accounting:select_customers' 'delete' %}">
     <input class="btn btn-primary" type="submit" value="Delete Customer"/> 

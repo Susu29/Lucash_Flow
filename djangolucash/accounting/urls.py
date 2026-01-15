@@ -4,7 +4,7 @@ from .models import Accounts, Suppliers, Customers, TransactionHeader
 app_name = "accounting"
 urlpatterns = [
     path("", views.IndexView.as_view(), name="index"),
-    path("home", views.EmptyView.as_view(template_name="accounting/home.html"), name = "home"),
+    path("home", views.HomeView.as_view(), name = "home"),
     path("faq", views.EmptyView.as_view(template_name="accounting/faq.html"), name = "faq"),
     path("accounts/", views.AccountsView.as_view(), name="accounts"),
     path("accounts/add/", views.AddAccountsView.as_view(), name="add_accounts"),

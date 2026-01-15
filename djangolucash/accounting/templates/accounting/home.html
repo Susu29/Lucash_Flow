@@ -1,3 +1,77 @@
-<div class = "container mb-4">
-    <h3 style="text-align: center;">Warning : Ledger might take 10-15 seconds to load</h3>
+{% extends "accounting/master.html" %} {% block content %}
+{% load humanize %}
+
+<div class = "container mt-5">
+    <h3 class="display-6" style="text-align: center; font-style: italic; font-size: 1.2rem;">Warning : Ledger might take 10-15 seconds to load</h3>
 </div>
+
+<div class="row">
+    <div class ="col">
+
+        <div class="container mt-5">
+        <div class="card shadow-lg">
+            <div class="card-body">
+            <h5 class="display-6" style="font-size: 1.5rem">Assets</h5>
+            <p>Fixed assets <strong>{{fixed_assets|floatformat:2|intcomma}}</strong></p>
+            <p>Current assets <strong>{{current_assets|floatformat:2|intcomma}}</strong></p>
+            <hr>
+            <p>Total assets: <strong>{{assets|floatformat:2|intcomma}}</strong></p>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class ="col">
+        
+        <div class="container mt-5">
+        <div class="card shadow-lg">
+            <div class="card-body">
+            <h5 class="display-6" style="font-size: 1.5rem">Liabilities</h5>
+            <p>Equity <strong>{{equity|floatformat:2|intcomma}}</strong></p>
+            <p>Debt <strong>{{debt|floatformat:2|intcomma}}</strong></p>
+            <hr>
+            <p>Total liabilities: <strong>{{liabilities|floatformat:2|intcomma}}</strong></p>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class ="col">
+        <div class="container mt-5">
+        <div class="card shadow-lg">
+        <div class="card-body">
+        <h5 class="display-6" style="font-size: 1.5rem">Profit & Loss</h5>
+        <p>Revenue : <strong>{{bal.class_7|floatformat:2|intcomma}}</strong></p>
+        <p>Expenses : <strong>{{bal.class_6|floatformat:2|intcomma}}</strong></p>
+        <hr>
+        <p>Net income: <strong>{{net_income|floatformat:2|intcomma}}</strong></p>
+        </div>
+        </div>
+        </div>
+    </div>
+
+    <div class ="col">
+        <div class="container mt-5">
+        <div class="card shadow-lg">
+        <div class="card-body">
+        <h5 class="display-6" style="font-size: 1.5rem">Customers & Suppliers</h5>
+        <p>Amount of customers: <strong>{{customers_amount}}</strong></p>
+        <p>Amount of suppliers: <strong>{{suppliers_amount}}</strong></p>
+        <hr>
+        <p>Amount of transactions: <strong>{{transactionheader_amount}}</strong></p>
+        </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+<div class = "container mt-5">
+    <h3 class="display-6 text-muted" style="text-align: center; font-size: 1.2rem;">LucashFlow - 2026</h3>
+</div>
+
+
+
+{% endblock %}

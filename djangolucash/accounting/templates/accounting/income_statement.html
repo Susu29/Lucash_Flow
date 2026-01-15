@@ -5,7 +5,7 @@
   <h1 class="display-6">Income Statement</h1>
 </div>
 <div class="container mt-5">
-  <table class="table table-bordered">
+  <table class="table table-bordered shadow-lg table-striped border-3 border-dark">
   <thead>
     <tr>
       <th colspan="2">Expenses</th>
@@ -53,7 +53,7 @@
 </div>
 
 <div class ="mt-5" style="display: flex; justify-content: center; gap: 15px">
-  <form action = "{% url 'accounting:index' %}">
+  <form action = "{% url 'accounting:home' %}">
     <input class="btn btn-primary" type="submit" value="Back to menu"/> 
   </form>
 </div>

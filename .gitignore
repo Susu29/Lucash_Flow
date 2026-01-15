@@ -1,3 +1,5 @@
 .venv/
 __pycache__/
 *.pyc
+.b - TEST FOLDER/
+.a - NOTES/

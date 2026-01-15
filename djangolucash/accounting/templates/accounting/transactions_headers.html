@@ -26,10 +26,17 @@
   </table>
 </div>
 
-<div style="display: flex; justify-content: center; gap: 15px">
+<div class="d-flex justify-content-center gap-3 mb-3">
   <form action = "{% url 'accounting:add_transactions' %}">
     <input class="btn btn-primary" type="submit" value="New transaction"/> 
   </form>
+  <form action = "{% url 'accounting:select_transactions' 'update'%}">
+    <input class="btn btn-primary" type="submit" value="Update transaction"/> 
+  </form>
+  <form action = "{% url 'accounting:select_transactions' 'delete'%}">
+    <input class="btn btn-primary" type="submit" value="Delete transaction"/> 
+  </form>
+</div>
 
 
   <script>
