@@ -8,7 +8,6 @@
         <th>Invoice</th>
         <th>Name</th>
         <th>Date</th>
-        <th>Created at</th>
         <th>Updated at</th>
       </tr>
     </thead>
@@ -16,11 +15,10 @@
     {% for field in transactionsheader %}
     
       <tr>
-        <td>{{ field.invoice}}</td>
+        <td style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">{{ field.invoice}}</td>
         <td>{{ field.name }}</td>
-        <td>{{ field.date }}</td>
-        <td>{{ field.created_at }}</td>
-        <td>{{ field.updated_at }}</td>
+        <td>{{ field.date|date:"d/m/Y" }}</td>
+        <td style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">{{ field.updated_at|date:"d/m/Y H:i" }}</td>
       </tr>
 
     {% endfor %}

@@ -1,7 +1,7 @@
 {% extends "accounting/master.html" %} {% block content %}
 {% load humanize %}
 
-<div class="container mt-4">
+<div class="container-fluid mt-4">
   <h1 class="display-6">Ledger</h1>
   <table class="table table-bordered table" id="ledgerTable">
     <thead>
@@ -30,15 +30,15 @@
     {% for field in ledger %}
     
       <tr>
-        <td>{{ field.header.id }}</td>
+        <td style="width:1%">{{ field.header.id }}</td>
         <td>{{ field.header.formatted_date }}</td>
-        <td>{{ field.account.sorting_account}}</td>
-        <td>{% if field.account.account %} {{field.account.account.name}} 
+        <td >{{ field.account.sorting_account}}</td>
+        <td style="overflow: hidden; text-overflow: ellipsis;">{% if field.account.account %} {{field.account.account.name}} 
             {% elif field.account.customer %} {{field.account.customer.name}}
             {% elif field.account.supplier %} {{field.account.supplier.name}} 
             {% endif %}
         </td>
-        <td>{{ field.header.name }}</td>
+        <td style="overflow: hidden; text-overflow: ellipsis;">{{ field.header.name }}</td>
         <td>{% if field.debit_credit == "D" %} {{field.amount|floatformat:2|intcomma}} {% endif %}</td>
         <td>{% if field.debit_credit == "C" %} {{field.amount|floatformat:2|intcomma}} {% endif %}</td>
 

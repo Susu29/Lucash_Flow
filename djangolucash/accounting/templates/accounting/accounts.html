@@ -2,32 +2,27 @@
 
 <div class="container mt-4">
   <h1 class="display-6">Accounts Table</h1>
-  <table class="table table-bordered table" id="accountTable">
+  <table class="table table-bordered table"  id="accountTable">
     <thead>
       <tr>
-        <th>Account class</th>
         <th>Account code</th>
         <th>Account name</th>
       </tr>
     </thead>
+    <tbody>
+    {% for account in Accounts %}
+      <tr>
+        <td>{{ account.code }}</td>
+        <td>{{ account.name }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
     <tfoot>
       <tr>
         <th></th>
         <th></th>
-        <th></th>
       </tr>
     </tfoot>
-    <tbody>
-    {% for account in Accounts %}
-    
-      <tr>
-        <td>{{ account.code_class}}</td>
-        <td>{{ account.code }}</td>
-        <td>{{ account.name }}</td>
-      </tr>
-    
-    {% endfor %}
-    </tbody>
   </table>
 </div>
 
@@ -43,8 +38,8 @@
   </form>
 </div>
 
-
 <script>
+
 $(document).ready(function () {
 
   // Add inputs to each footer cell (bottom of table)
@@ -56,8 +51,8 @@ $(document).ready(function () {
   // Initialize DataTable ONCE
   var table = $('#accountTable').DataTable({
     select: true,
-    columnDefs: [{ type: 'string', targets: 1 }],
-    order: [[1, 'asc']]
+    columnDefs: [{ type: 'string', targets: 0}],
+    order: [[0, 'asc']]
   });
 
     table.columns().every( function () {
@@ -71,9 +66,6 @@ $(document).ready(function () {
     } );
 } );
 </script>
-
-
-
 
 {% endblock %}
 

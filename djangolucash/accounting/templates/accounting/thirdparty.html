@@ -1,23 +1,20 @@
 {% extends "accounting/master.html" %} {% block content %}
 
 <div class="container mt-4">
-  <h1 class="display-6">{{party_type}} table</h1>
-
-  <table class="table table-bordered table" id="thirdpartyTable">
+  <h1 class="display-6" >{{party_type}} table</h1>
+  <table class="table table-bordered" ; id="thirdpartyTable">
     <thead>
       <tr>
-        <th>Code</th>
+        <th style="width: 1%;">Code</th>
         <th>Name</th>
         <th>Email</th>
-        <th>Address</th>
-        <th>Phone</th>
-        <th>Created</th>
-        <th>Uptaded</th>
+        <th style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">Address</th>
+        <th style="width: 1%;">Phone</th>
+        <th style="width: 1%;">Updated</th>
       </tr>
     </thead>
     <tfoot>
       <tr>
-        <th></th>
         <th></th>
         <th></th>
         <th></th>
@@ -33,10 +30,9 @@
         <td>{{party.code}}</td>
         <td>{{party.name}}</td>
         <td>{{party.email}}</td>
-        <td>{{party.address}}</td>
+        <td style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">{{party.address}}</td>
         <td>{{party.phone}}</td>
-        <td>{{party.created_at}}</td>
-        <td>{{party.updated_at}}</td>
+        <td>{{party.updated_at|date:"d/m/Y" }}</td>
       </tr>
     
     {% endfor %}

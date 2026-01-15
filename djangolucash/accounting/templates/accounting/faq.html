@@ -1,0 +1,110 @@
+{% extends "accounting/master.html" %} {% block content %}
+<div class="container mb-4 mt-4">
+  <h3 style="text-align:center;">LucashFlow — Accounting software project</h3>
+  <p style="text-align:center;">
+    Small accounting software built with Django (Python) & PostgreSQL,  
+    covering transactions, ledger, balance, and financial statements.
+    Deployed on AWS EC2.
+  </p>
+</div>
+
+<h3><u>Usage of AI</u></h3>
+<p>
+  AI has been used like a tutor, basically like an enhanced google. It's usage has been limited.<br>
+  By querying google, the AI Overview greatly helped me saving time browsing multiple websites.<br>
+  Basically giving me more exemples that Django documentation often lacks of.
+</p>
+
+
+<p>
+  <u><strong>Cases where I relied on ChatGPT:</strong></u><br>
+
+<ul>
+  <li>
+    <strong>Logo:</strong><br>
+    The logo was made using ChatGPT.
+  </li>
+  <br>
+  <li>
+    <strong>Sample database:</strong><br>
+    The sample database was made using ChatGPT, as creating it manually would have been very tedious.<br>
+    Following the prompts, I have made a script verifying the integrity of the csv file given.<br> 
+    Script that has proven to be useful as I had to modify the prompt numerous time.
+  </li>
+  <br>
+  <li>
+    <strong>CSS / layout:</strong><br>
+    Since CSS beyond the basics was not a priority, I’ve asked a lot of help on how to adjust the tables as they subjects to a lot of misalignment.
+  </li>
+  <br>
+  <li>
+    <strong>Django InlineFormSet:</strong><br>
+    Some guidance on the InLineFormSet as I didn’t found the documentation very explicit.
+  </li>
+</ul>
+
+<h3><u>Tools Used</u></h3>
+
+<ul>
+  <li><strong>Framework:</strong> Django</li>
+  <li><strong>Programming languages:</strong> Python (including Pandas), HTML, CSS (Bootstrap), JavaScript (basic)</li>
+  <li><strong>Database:</strong> SQL, PostgreSQL</li>
+  <li><strong>Database tools:</strong> DBeaver</li>
+  <li><strong>Version control:</strong> Git, GitHub</li>
+  <li><strong>Development tools:</strong> VS Code</li>
+  <li><strong>Deployment (cloud):</strong> AWS (EC2)</li>
+  <li><strong>Other libraries:</strong> DataTables</li>
+</ul>
+
+<h3><u>FAQ</u></h3>
+
+<strong>Why is the website in english but the accounts in french ?</strong><br>
+I am more familiar with French accounting standards (PCG), so I chose to apply the French accounting structure to this project.<br>
+However, the website is in English to reach a larger public.<br><br>
+
+<strong>Source of the PCG : (Accounting Plan)</strong><br>
+https://github.com/Seb35/plans-comptables-francais<br><br>
+
+<h3><u>French translation :</u></h3>
+<ul>
+  <li><strong>Accounts</strong> : Comptes</li>
+  <li><strong>Suppliers</strong> : Fournisseurs</li>
+  <li><strong>Customers</strong> : Clients</li> 
+  <li><strong>Transactions</strong> : Ecritures comptables</li>
+  <li><strong>Ledger</strong> : Grand livre</li>
+  <li><strong>Balance</strong> : Balance comptable</li>
+  <li><strong>Income statement</strong> : Compte de résultat</li>
+  <li><strong>Balance sheet</strong> : Bilan</li>
+</ul>
+
+
+<h3><u>Updates</u></h3>
+<p>1.0.0 : Initial online release</p>
+
+<h3><u>Planned features roadmap</u></h3>
+
+<ul>
+  <li>Homepage : Embedded Power BI dashboard</li>
+  <li>Users management</li>
+  <li>Company management</li>
+  <li>Fiscal Year</li>
+  <li>Export to CSV/PDF</li>
+  <li>Import from CSV</li>
+  <li>Homepage with indicators</li>
+  <li>Faster ledger loading</li>
+  <li>Invoicing</li>
+  <li>Adding transaction : suggestive search box for accounts</li>
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

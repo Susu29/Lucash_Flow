@@ -12,6 +12,12 @@ from django.db.models.functions import Coalesce
 from decimal import Decimal
 
 # Create your views here.
+
+### Empty view for FAQ
+
+class EmptyView(TemplateView):
+    pass
+
 class IndexView(TemplateView):
     template_name = "accounting/index.html"
 ### Accounts View Related
