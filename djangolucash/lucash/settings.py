@@ -80,6 +80,8 @@ WSGI_APPLICATION = 'lucash.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+### LOCAL DB HERE
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -90,6 +92,20 @@ DATABASES = {
         'PORT': '5432'
     }
 }
+"""
+### AMAZON DB HERE
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'lucashflowaws',
+        'USER': 'postgres',
+        'PASSWORD': 'lucashflow86',
+        'HOST': 'original.c6xk4omeip91.us-east-1.rds.amazonaws.com',
+        'PORT': '5432'
+    }
+}
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
