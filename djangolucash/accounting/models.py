@@ -113,9 +113,11 @@ class TransactionHeader(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ["id"]
+
     def formatted_date(self):
             return self.date.strftime("%d/%m/%Y")
-    
 
     def __str__(self):
         return f"{self.id} - {self.name}" 

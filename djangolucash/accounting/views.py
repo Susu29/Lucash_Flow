@@ -11,7 +11,10 @@ from django.db.models import Sum, Q, F
 from django.db.models.functions import Coalesce
 from decimal import Decimal
 from .helpers import global_data
-
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
+from django.contrib.messages import get_messages
 # Create your views here.
 
 ### "Other Views : Home, FAQ.."
@@ -158,6 +161,7 @@ def add_transactions(request):
                 header = form.save()
                 formset.instance = header
                 formset.save()
+            cache.delete(LEDGER_CACHE_KEY) # Deleting the cache here
             messages.success(request, "Transaction created successfully.")
             return redirect("accounting:ledger")
     else:
@@ -193,6 +197,11 @@ class DeleteTransactionsView(SuccessMessageMixin, DeleteView):
     success_url = reverse_lazy('accounting:ledger')
     success_message = ('Transaction deleted successfully.')
 
+    def delete(self, request, *args, **kwargs):
+        response = super().delete(request, *args, **kwargs)
+        cache.delete(LEDGER_CACHE_KEY)
+        return response
+
 def update_transactions(request,pk):
 
     header = TransactionHeader.objects.get(id=pk)
@@ -205,6 +214,7 @@ def update_transactions(request,pk):
             with transaction.atomic():
                 header = form.save()
                 formset.save()
+            cache.delete(LEDGER_CACHE_KEY) # Deleting the cache here
             messages.success(request, "Transaction updated successfully.")
             return redirect("accounting:ledger")
     else:
@@ -213,12 +223,28 @@ def update_transactions(request,pk):
     return render(request, "accounting/update_transactions.html", {'form': form, 'formset' : formset})
 
 #Financial Statements View Related
-
+LEDGER_CACHE_KEY = "ledger:cache"
 class LedgerView(ListView):
     template_name = "accounting/ledger.html"
     model = TransactionLine
     context_object_name = "ledger"
 
+    def get_queryset(self):
+        qs = TransactionLine.objects.select_related("header", "account").all()
+        return qs
+    
+    def dispatch(self, request, *args, **kwargs):
+        cached_response = cache.get(LEDGER_CACHE_KEY)
+        if cached_response: # Return cache if exists
+            return cached_response
+        response = super().dispatch(request, *args, **kwargs)
+        if any(get_messages(request)): # Don't cache if there's a message 
+            return response
+        response.render() # Starting the caching process
+        cache.set(LEDGER_CACHE_KEY, response, None)
+        return response
+
+    
 class BalanceView(ListView):
     template_name = "accounting/balance.html"
     model = AccountsLink

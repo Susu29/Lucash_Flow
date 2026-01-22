@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'lucash.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 ### LOCAL DB HERE
-"""
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -104,7 +104,7 @@ DATABASES = {
         'PORT': '5432'
     }
 }
-
+"""
 
 
 # Password validation
@@ -144,3 +144,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+    }
+}
