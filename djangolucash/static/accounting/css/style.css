@@ -1,0 +1,12 @@
+.major_txt {
+    font-weight: bold;
+}
+
+.numbers {
+    text-align: right;
+}
+
+.title {
+    font-size: 2rem;
+    text-align: center;
+}
