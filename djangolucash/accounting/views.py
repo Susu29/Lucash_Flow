@@ -15,8 +15,13 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.core.cache import cache
 from django.contrib.messages import get_messages
-# Create your views here.
 
+# Cache keys
+TRANSACTIONS_CACHE_KEY = "transactions:cache"
+LEDGER_CACHE_KEY = "ledger:cache"
+
+
+# Create your views here.
 ### "Other Views : Home, FAQ.."
 
 class EmptyView(TemplateView):
@@ -161,7 +166,7 @@ def add_transactions(request):
                 header = form.save()
                 formset.instance = header
                 formset.save()
-            cache.delete(LEDGER_CACHE_KEY) # Deleting the cache here
+            cache.delete_many([LEDGER_CACHE_KEY,TRANSACTIONS_CACHE_KEY])# Deleting the cache here
             messages.success(request, "Transaction created successfully.")
             return redirect("accounting:ledger")
     else:
@@ -174,6 +179,18 @@ class TransactionsHeaderView(ListView):
     template_name = "accounting/transactions_headers.html"
     model = TransactionHeader
     context_object_name = "transactionsheader"
+
+    def dispatch(self, request, *args, **kwargs):
+        cached_response = cache.get(TRANSACTIONS_CACHE_KEY)
+        if cached_response: # Return cache if exists
+            return cached_response
+        response = super().dispatch(request, *args, **kwargs)
+        if any(get_messages(request)): # Don't cache if there's a message 
+            return response
+        response.render() # Starting the caching process
+        cache.set(TRANSACTIONS_CACHE_KEY, response, None)
+        return response
+
 
 class SelectTransactionsView(FormView): 
     template_name = "accounting/select_transactions.html"
@@ -198,8 +215,8 @@ class DeleteTransactionsView(SuccessMessageMixin, DeleteView):
     success_message = ('Transaction deleted successfully.')
 
     def delete(self, request, *args, **kwargs):
+        cache.delete_many([LEDGER_CACHE_KEY,TRANSACTIONS_CACHE_KEY])
         response = super().delete(request, *args, **kwargs)
-        cache.delete(LEDGER_CACHE_KEY)
         return response
 
 def update_transactions(request,pk):
@@ -214,16 +231,15 @@ def update_transactions(request,pk):
             with transaction.atomic():
                 header = form.save()
                 formset.save()
-            cache.delete(LEDGER_CACHE_KEY) # Deleting the cache here
+            cache.delete_many([LEDGER_CACHE_KEY,TRANSACTIONS_CACHE_KEY]) # Deleting the cache here
             messages.success(request, "Transaction updated successfully.")
             return redirect("accounting:ledger")
     else:
         form = TransactionsHeaderForm(instance=header)
-        formset = TransactionsLinesFormSet(instance=header)
+        formset = TransactionsLinesFormSet(instance=header, queryset=TransactionLine.objects.select_related('account'))
     return render(request, "accounting/update_transactions.html", {'form': form, 'formset' : formset})
 
 #Financial Statements View Related
-LEDGER_CACHE_KEY = "ledger:cache"
 class LedgerView(ListView):
     template_name = "accounting/ledger.html"
     model = TransactionLine

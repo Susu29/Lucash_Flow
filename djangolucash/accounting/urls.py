@@ -2,8 +2,11 @@ from django.urls import path
 from . import views, forms
 from .models import Accounts, Suppliers, Customers, TransactionHeader
 from django.views.generic import RedirectView
+from django.urls import include, path
+
 app_name = "accounting"
 urlpatterns = [
+    path("select2/", include("django_select2.urls")), #SELECT2 Pluggin as in documentation
     path("", RedirectView.as_view(url="home")),
     path("home", views.HomeView.as_view(), name = "home"),
     path("faq", views.EmptyView.as_view(template_name="accounting/faq.html"), name = "faq"),

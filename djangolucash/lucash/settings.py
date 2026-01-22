@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['54.159.29.199', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'django_select2',
     'accounting',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'crispy_bootstrap5',
-    "django.contrib.humanize",
+    'django.contrib.humanize'
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -82,6 +83,7 @@ WSGI_APPLICATION = 'lucash.wsgi.application'
 
 ### LOCAL DB HERE
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -104,7 +106,7 @@ DATABASES = {
         'PORT': '5432'
     }
 }
-"""
+
 
 
 # Password validation

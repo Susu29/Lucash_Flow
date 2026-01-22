@@ -1,4 +1,5 @@
 {% extends "accounting/master.html" %} {% block content %}
+<!-- ATTENTION ! THE PAGE IS CACHED SO CHANGES AREN'T LIVE-->
 
 <div class="container mt-4">
   <h1 class="display-6">Transaction Headers</h1>
@@ -14,7 +15,6 @@
     </thead>
     <tbody>
     {% for field in transactionsheader %}
-    
       <tr>
         <td>{{field.id}}</td>
         <td style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">{{ field.invoice}}</td>
@@ -25,6 +25,15 @@
 
     {% endfor %}
     </tbody>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </tfoot>
   </table>
 </div>
 
@@ -40,18 +49,33 @@
   </form>
 </div>
 
+<script>
 
-  <script>
-  $(document).ready( function () {
-      $('#transactionsheaderTable').DataTable(
-        {select: true,
-        columnDefs:[{type : 'string', targets:1}],
-        order : [[0, 'desc']],
-        }
-      )
-  } );
-  </script>
+$(document).ready(function () {
 
+  // Add inputs to each footer cell (bottom of table)
+    $('#transactionsheaderTable tfoot th').each( function () {
+        var title = $('#transactionsheaderTable thead th').eq( $(this).index() ).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    } );
+
+  // Initialize DataTable ONCE
+  var table = $('#transactionsheaderTable').DataTable({
+    select: true,
+    order: [[0, 'desc']]
+  });
+
+    table.columns().every( function () {
+        var that = this;
+ 
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            that
+                .search( this.value )
+                .draw();
+        } );
+    } );
+} );
+</script>
 
 
 {% endblock %}

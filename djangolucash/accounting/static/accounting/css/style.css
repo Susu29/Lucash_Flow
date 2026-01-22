@@ -10,3 +10,85 @@
     font-size: 2rem;
     text-align: center;
 }
+
+
+/*THIS PART WAS COPY PASTED FROM CHATGPT AS THERE WAS SOME INCOMPATIBILITY WITH SELECT2 WIDTH. 3HOURS ON THIS WAS ENOUGH FOR ME*/
+
+/* 1. Table Layout Setup */
+.ledger-table {
+    table-layout: fixed; /* Forces the browser to obey the widths we set */
+    width: 100% !important;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+/* 2. Column Width Definitions */
+.ledger-table .dc-col {
+    width: 15%;
+}
+
+.ledger-table .account-col {
+    width: 60%; /* Adjusted to give Amount more room */
+    overflow: hidden;
+}
+
+.ledger-table .amount-col {
+    width: 25%; /* Increased to prevent input overflow */
+
+}
+
+/* 3. Cell & Input Behavior */
+.ledger-table th,
+.ledger-table td {
+    padding: 6px;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+
+/* Force all inputs (including Amount) to stay inside the <td> */
+.ledger-table input,
+.ledger-table select {
+    width: 100% !important;
+    max-width: 100%;
+    box-sizing: border-box; /* Includes padding in width calculation */
+    display: block;
+}
+
+.numbers {
+    text-align: right;
+}
+
+/* 4. Select2 Fixes (The "Crazy Large" Fix) */
+/* This forces the Select2 container to respect the table cell width */
+.ledger-table .select2-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block;
+}
+
+.ledger-table .select2-selection--single {
+    height: 31px !important;
+    line-height: 31px !important;
+    display: flex !important;
+    align-items: center;
+}
+
+/* Ensures long account names truncate with ... instead of stretching the box */
+.ledger-table .select2-selection__rendered {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    width: 100%;
+    padding-right: 20px; /* Leave room for the arrow */
+    box-sizing: border-box;
+}
+
+/* 5. General Styling */
+.major_txt {
+    font-weight: bold;
+}
+
+.title {
+    font-size: 2rem;
+    text-align: center;
+}

@@ -1,13 +1,13 @@
 from django.forms import ModelForm
 from django import forms
-from django.db import models
-from accounting.models import Accounts, Suppliers, Customers, TransactionHeader, TransactionLine
+from accounting.models import Accounts, Suppliers, Customers, TransactionHeader, TransactionLine, AccountsLink
 from django.db.models.functions import Cast
 from django.db.models import CharField
-from django.forms import inlineformset_factory, BaseInlineFormSet
+from django.forms import inlineformset_factory, BaseInlineFormSet, Select
 from django.core.exceptions import ValidationError
 from decimal import Decimal
 from django.forms import TextInput
+from django_select2 import forms as s2forms
 
 
 class AccountsForm(ModelForm):
@@ -15,12 +15,21 @@ class AccountsForm(ModelForm):
         model = Accounts
         fields = "__all__"
 
-
+"""
 class SelectAccountsForm(forms.Form):
     accounts = forms.ModelChoiceField(
     queryset= Accounts.objects.order_by(Cast("code", CharField()).asc()),
     label="Choose an account",
     )
+"""
+
+class SelectAccountsForm(forms.Form):
+    acounts = forms.ModelChoiceField(
+        queryset=Accounts.objects.order_by(Cast("code", CharField()).asc()),
+        label="Choose an account",
+        widget=forms.Select(attrs={'class' : 'select2-active'}))
+        
+
 
 class SuppliersForm(ModelForm):
     class Meta:
@@ -87,10 +96,11 @@ class TransactionBaseInLineFormSet(BaseInlineFormSet):
 ### Formset_Factory = Prepare to have multiple forms.
 TransactionsLinesFormSet = inlineformset_factory(
     TransactionHeader,
-    TransactionLine, 
+    TransactionLine,
     fields=["debit_credit", "account", "amount"],
+    widgets={"all": Select(attrs={"class": "select2-active"})},
     min_num=2,
-    extra=5,
+    extra=3,
     can_delete=True,
     formset=TransactionBaseInLineFormSet)
 

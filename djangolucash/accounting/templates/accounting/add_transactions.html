@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<div class="container mt-5 shadow p-4 rounded" style="max-width: 1000px;">
+<div class="container-fluid mt-5 shadow p-4 rounded cont" style="max-width: 1000px;">
     <h1>Create new transaction</h1>
 
     <form action = "" method="post">
@@ -17,20 +17,21 @@
         <div>
             <h3>Transaction Lines</h3>
             {{ formset.management_form }}
-            <table class="table" style="max-width:950px; table-layout: fixed;">
+                <table class="table table-bordered table-sm ledger-table">
                 <thead>
                     <tr>
-                        <th style="width:12%">Debit/Credit</th>
-                        <th style="width:63%">Account</th>
-                        <th style="width:25%">Amount</th>
+                        <th class="dc-col">Debit/Credit</th>
+                        <th class="account-col">Account</th>
+                        <th class="amount-col">Amount</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     {% for line in formset %}
                     <tr>
-                        <td style = "overflow: hidden;">{{line.debit_credit}}</td>
-                        <td style = "overflow: hidden;">{{line.account}}</td>
-                        <td style = "overflow: hidden;">{{line.amount}}</td>
+                        <td class="dc-col">{{ line.debit_credit }}</td>
+                        <td class="account-col">{{ line.account }}</td>
+                        <td class="amount-col">{{ line.amount }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -38,6 +39,15 @@
             <input id="submit" type="submit">
         </div>
     </form>
-        
+
+<script>
+    $(document).ready(function() {
+        $('.ledger-table select').select2({
+            theme: "classic", 
+            width: 'resolve',
+            dropdownAutoWidth: true
+        });
+    });
+</script>
 
 {% endblock %}
