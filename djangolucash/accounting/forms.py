@@ -7,8 +7,6 @@ from django.forms import inlineformset_factory, BaseInlineFormSet, Select
 from django.core.exceptions import ValidationError
 from decimal import Decimal
 from django.forms import TextInput
-from django_select2 import forms as s2forms
-
 
 class AccountsForm(ModelForm):
     class Meta:
