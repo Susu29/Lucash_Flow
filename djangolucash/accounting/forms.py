@@ -13,21 +13,11 @@ class AccountsForm(ModelForm):
         model = Accounts
         fields = "__all__"
 
-"""
 class SelectAccountsForm(forms.Form):
     accounts = forms.ModelChoiceField(
-    queryset= Accounts.objects.order_by(Cast("code", CharField()).asc()),
-    label="Choose an account",
-    )
-"""
-
-class SelectAccountsForm(forms.Form):
-    acounts = forms.ModelChoiceField(
         queryset=Accounts.objects.order_by(Cast("code", CharField()).asc()),
         label="Choose an account",
         widget=forms.Select(attrs={'class' : 'select2-active'}))
-        
-
 
 class SuppliersForm(ModelForm):
     class Meta:
